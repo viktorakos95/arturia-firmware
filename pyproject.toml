@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "keystep37-research"
+version = "0.1.0"
+description = "Independent source-only firmware research tools for original KeyStep 37"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = []
+
+[project.optional-dependencies]
+analysis = ["capstone>=5,<6"]
+
+[project.scripts]
+ks37 = "ks37.__main__:main"
+
+[tool.setuptools]
+packages = ["ks37"]

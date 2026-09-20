@@ -1,0 +1,23 @@
+# User-supplied firmware and local analysis stay outside the source release.
+/local/
+/dist/
+build/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.DS_Store
+*.led
+*.bin
+*.elf
+*.o
+*.a
+*.hex
+*.map
+*.dump
+*.jsonl
+*.log
+*.pdf
+*.zip
+*.tar
+*.gz

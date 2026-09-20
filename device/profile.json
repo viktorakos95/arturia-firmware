@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "profile": "generator14-v4",
+  "stock_sha256": "464e2ca2fc5318e6026f15cf3c3a61f6417a80171260543a18e87df116319a8a",
+  "flash_base": "0x08000000",
+  "application_start": "0x08004000",
+  "code_start": "0x0801f400",
+  "code_limit": "0x0802fc00",
+  "ram_start": "0x20005eb0",
+  "payload_start": "0x20005ef0",
+  "initial_sp": "0x2000c000",
+  "stack_margin": 4096,
+  "externals": {
+    "stock_runtime_init": "0x801d8c9",
+    "ks37_control_pass": "0x8004935",
+    "ks37_control_consume": "0x8004987",
+    "__bda_stock_debounce": "0x801a761",
+    "ks37_playback_transport_continue": "0x8012339",
+    "ks37_playback_stock_step": "0x8013e8d",
+    "__gd_stock_service": "0x80129cd",
+    "__gp_writer_continue": "0x800d273",
+    "__gp_spi_send": "0x800a66f",
+    "__gp_display_continue": "0x801d4ed",
+    "ks37_generator_pitch_native": "0x801c385",
+    "ks37_time_division_applied_continue": "0x8012ce1"
+  },
+  "c_modules": [
+    "generator_core",
+    "runtime",
+    "stock_sequence",
+    "generator_gesture",
+    "generator_controller",
+    "native_admission",
+    "native_admission_read",
+    "playback_bridge",
+    "button_ownership",
+    "button_admission",
+    "control_input_policy",
+    "boot_ram",
+    "boot_ram_target",
+    "input_history",
+    "keyled_adapter",
+    "keyled_mmio",
+    "device_runtime",
+    "button_device_adapter",
+    "playback_device",
+    "playback_device_mmio",
+    "input_device",
+    "input_device_target",
+    "generator_device_runtime",
+    "generator_device_target",
+    "generator_panel",
+    "generator_panel_target",
+    "generator_diagnostics",
+    "generator_keyled",
+    "generator_pitch_target",
+    "generator_time_division",
+    "generator_rate12"
+  ],
+  "assembly": [
+    "boot_ram_hook",
+    "control_hook",
+    "input_history_hooks",
+    "button_device_hooks",
+    "playback_device_hook",
+    "input_device_hooks",
+    "generator_device_hooks",
+    "generator_panel_hooks",
+    "generator_writer_guards",
+    "generator_pitch_hooks",
+    "generator_time_division_hooks",
+    "generator_mode12_hooks",
+    "playback_cycle_hooks"
+  ],
+  "patches": [
+    {
+      "address": "0x8004930",
+      "before": "84 f8 5a 30",
+      "target": "ks37_control_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8005a44",
+      "before": "84 f8 6d 00",
+      "target": "ks37_generator_mode_ack_guard12",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x800c05e",
+      "before": "b0 f8 44 00",
+      "target": "ks37_input_usb_flags_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x800cdfa",
+      "before": "0e f0 a9 fc",
+      "target": "ks37_input_scanner_hook",
+      "kind": "bl"
+    },
+    {
+      "address": "0x800cf30",
+      "before": "0e f0 0e fc",
+      "target": "ks37_input_scanner_hook",
+      "kind": "bl"
+    },
+    {
+      "address": "0x800d064",
+      "before": "0e f0 74 fb",
+      "target": "ks37_input_scanner_hook",
+      "kind": "bl"
+    },
+    {
+      "address": "0x800d26e",
+      "before": "30 b5 83 b0",
+      "target": "ks37_panel_pixel_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x800de30",
+      "before": "00 23 01 e0",
+      "target": "ks37_generator_slot_dirty_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x800e488",
+      "before": "10 b5 04 46",
+      "target": "ks37_input_usb_deinit_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8010310",
+      "before": "2e 78 06 f0 0f 06",
+      "target": "ks37_input_midi_pre_filter_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8011a1c",
+      "before": "2d e9 f0 43",
+      "target": "ks37_generator_builder_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8011ee8",
+      "before": "80 f8 49 10",
+      "target": "ks37_time_division_request_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8012334",
+      "before": "f0 b5 85 b0",
+      "target": "ks37_playback_transport_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8012cd2",
+      "before": "84 f8 48 70",
+      "target": "ks37_time_division_applied_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8012eb6",
+      "before": "00 23 a3 71",
+      "target": "ks37_playback_cycle_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8012ec0",
+      "before": "00 f0 e4 ff",
+      "target": "ks37_playback_step_hook",
+      "kind": "bl"
+    },
+    {
+      "address": "0x8013020",
+      "before": "01 60 70 47",
+      "target": "ks37_generator_current_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8013024",
+      "before": "41 60 70 47",
+      "target": "ks37_generator_pending_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8013028",
+      "before": "43 68 03 60",
+      "target": "ks37_generator_pending_apply_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x80130cc",
+      "before": "30 b4 05 68",
+      "target": "ks37_generator_cell_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8013102",
+      "before": "03 68 40 29",
+      "target": "ks37_generator_length_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8013118",
+      "before": "03 68 83 f8 02 14",
+      "target": "ks37_generator_gate_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x801312e",
+      "before": "03 68 83 f8 01 14",
+      "target": "ks37_generator_swing_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x801316a",
+      "before": "70 b4 83 b0",
+      "target": "ks37_generator_record_note_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8013266",
+      "before": "82 29 01 d0",
+      "target": "ks37_generator_record_rest_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x80132ce",
+      "before": "2d e9 f0 4f",
+      "target": "ks37_generator_merge_cell_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x801342a",
+      "before": "f0 b4 00 23",
+      "target": "ks37_generator_reorder_cell_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x801348e",
+      "before": "2d e9 f0 43",
+      "target": "ks37_generator_record_build_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8013788",
+      "before": "02 68 92 f8 00 34",
+      "target": "ks37_generator_shorten_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x80137c4",
+      "before": "03 68 01 22",
+      "target": "ks37_generator_clear_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x80137f0",
+      "before": "30 b4 90 f8 2e 30",
+      "target": "ks37_generator_record_length_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8013890",
+      "before": "f0 b4 08 29",
+      "target": "ks37_generator_pattern_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8013944",
+      "before": "f8 b5 04 46",
+      "target": "ks37_generator_tie_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8013b84",
+      "before": "f8 b5 90 f9 45 30",
+      "target": "ks37_generator_flush_record_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8013c58",
+      "before": "00 23 3f 2b",
+      "target": "ks37_generator_clear_cells_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8014034",
+      "before": "08 f0 a6 f9",
+      "target": "ks37_generator_pitch_hook",
+      "kind": "bl"
+    },
+    {
+      "address": "0x8014418",
+      "before": "30 b4 8b 7a",
+      "target": "ks37_generator_config_bytes_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8014534",
+      "before": "30 b4 8b 7a",
+      "target": "ks37_generator_config_words_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x80150a4",
+      "before": "fb f7 c8 fa",
+      "target": "ks37_input_usb_ingress_hook",
+      "kind": "bl"
+    },
+    {
+      "address": "0x80154d0",
+      "before": "6e 4b 1d 60",
+      "target": "ks37_input_cold_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x80157a8",
+      "before": "03 f0 c6 fc",
+      "target": "ks37_input_acquire_hook",
+      "kind": "bl"
+    },
+    {
+      "address": "0x80157b4",
+      "before": "fd f7 0a f9",
+      "target": "ks37_generator_main_hook",
+      "kind": "bl"
+    },
+    {
+      "address": "0x80157ca",
+      "before": "f7 f7 3d fa",
+      "target": "ks37_input_scan_hook",
+      "kind": "bl"
+    },
+    {
+      "address": "0x8016968",
+      "before": "38 b5 04 46",
+      "target": "ks37_generator_mode_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8017260",
+      "before": "70 b5 92 b0",
+      "target": "ks37_generator_ui_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8017856",
+      "before": "01 23 43 73",
+      "target": "ks37_button_chord_down_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8017d98",
+      "before": "00 23 43 73",
+      "target": "ks37_button_chord_up_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8017ed0",
+      "before": "10 b5 82 b0",
+      "target": "ks37_generator_slot_mode_guard12",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x801862a",
+      "before": "1a 68 12 f0 20 0f",
+      "target": "ks37_input_uart_status_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8019fa8",
+      "before": "30 bc 70 47",
+      "target": "ks37_button_constructor_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x8019fe2",
+      "before": "99 4b 93 f8 b9 50",
+      "target": "ks37_button_press_pre_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x801a500",
+      "before": "0d b0 f0 bd",
+      "target": "ks37_button_press_post_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x801a558",
+      "before": "75 4b 93 f8 b9 30",
+      "target": "ks37_button_release_pre_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x801a5e4",
+      "before": "0b b0 30 bd",
+      "target": "ks37_button_release_post_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x801a7c2",
+      "before": "ff f7 cd ff",
+      "target": "ks37_button_observer_hook",
+      "kind": "bl"
+    },
+    {
+      "address": "0x801b750",
+      "before": "2d e9 f0 4f",
+      "target": "ks37_generator_note_guard",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x801d33a",
+      "before": "00 f0 c5 fa",
+      "target": "boot_ram_hook",
+      "kind": "bl"
+    },
+    {
+      "address": "0x801d354",
+      "before": "ac 5e 00 20",
+      "target": "__boot_ram_end",
+      "kind": "DATA-LE32"
+    },
+    {
+      "address": "0x801d4e2",
+      "before": "04 eb 08 01 38 46 ed f7 c1 f8",
+      "target": "ks37_panel_display_hook",
+      "kind": "b.w"
+    },
+    {
+      "address": "0x801dab0",
+      "before": "00 f0 5e f8",
+      "target": "boot_ram_target_sbrk",
+      "kind": "bl"
+    },
+    {
+      "address": "0x801db88",
+      "before": "b0 5e 00 20",
+      "target": "__boot_ram_end",
+      "kind": "DATA-LE32"
+    }
+  ],
+  "baseline": {
+    "candidate_sha256": "45a4face4e130b304e87526e7b7e6c4bae64b88c48c6e4c4c9754fa5815fdd54",
+    "candidate_bytes": 327520,
+    "code_bytes": 46063,
+    "code_sha256": "50e9ce6eb8a39b783ca618c4aa9ddfc934b1c9315d43b945cac74a54b02dee25",
+    "runtime_bytes": 10248,
+    "ram_bytes": 10328,
+    "ram_end": "0x20008708"
+  }
+}

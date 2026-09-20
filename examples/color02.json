@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "source_sha256": "464e2ca2fc5318e6026f15cf3c3a61f6417a80171260543a18e87df116319a8a",
+  "edits": [
+    {"flash_address": "0x0801e0e8", "expected": "10", "replacement": "00"}
+  ]
+}

@@ -1,0 +1,2363 @@
+{
+  "schema_version": 1,
+  "device": "Original KeyStep 37; not KeyStep 37 mk2",
+  "firmware": "1.1.6.579",
+  "scope": "Selected application paths only. Recovered labels are provisional. Hash matches verify identity, not behavioral claims or device acceptance.",
+  "image": {
+    "base": "0x08004000",
+    "length": 111616,
+    "sha256": "13443c4cb8cca2686abd46518dd367f6f8953cde709fdcb405134f086b32875f"
+  },
+  "legend": {
+    "confirmed_static": "Instruction, field or table relationship traced in the exact application image.",
+    "supported": "Role supported by traced behavior; some context remains unresolved.",
+    "hypothesis": "Proposed interpretation requiring a separate check."
+  },
+  "nodes": [
+    {
+      "id": "vectors",
+      "kind": "flash_data",
+      "address": "0x08004000",
+      "label": "application_vectors",
+      "status": "confirmed_static",
+      "summary": "Application vector table. Initial SP is 0x2000c000; this does not establish total SRAM or safe stack usage.",
+      "evidence": [
+        {
+          "address": "0x08004000",
+          "length": 8,
+          "sha256": "697003eecb3e56f5d1850ed1e0185e70eb4326651d3d1546f4c79c74fc47685d",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "reset",
+      "kind": "function",
+      "address": "0x0801d310",
+      "label": "reset_handler",
+      "status": "confirmed_static",
+      "summary": "Copies initialized data, clears the original zero-initialized range, then calls platform, constructor runtime and application entry. Memory added by extensions requires explicit initialization and heap separation.",
+      "evidence": [
+        {
+          "address": "0x0801d310",
+          "length": 16,
+          "sha256": "bb174a1f76aa271b682724d7a8896bb1d434fffad3331420817f253fa886ab93",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801d336",
+          "length": 12,
+          "sha256": "f590823aa5d5186db8d3c8672342d8501e16959cc3a6cdf527cd40b64c169148",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801d33a",
+          "length": 4,
+          "sha256": "20bf4816e885d24effde2241b9b4cf7fccfa966e3aaa0d5e4d179f0d82e9308f",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "app",
+      "kind": "function",
+      "address": "0x080150d0",
+      "label": "application_setup_and_loop",
+      "status": "confirmed_static",
+      "summary": "Contains setup and the main polling loop; loop labels are not separate callable functions.",
+      "evidence": [
+        {
+          "address": "0x080150d0",
+          "length": 8,
+          "sha256": "530696bd1b063bed34fa3ee07e2ed9d51aad767d8f97e8eb062db887ee1ab5ec",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x080150d0",
+          "length": 6,
+          "sha256": "429efb687bcd13c9652ba7bcdc6151ef6ab94eb58ef60e17e24534923c54e253",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "loop",
+      "kind": "code_label",
+      "address": "0x08015768",
+      "label": "application_loop_head",
+      "status": "confirmed_static",
+      "summary": "Internal main-loop label. USB parsing and sequence servicing recur within one pass; elapsed main service is not proof that IRQ producers are idle.",
+      "evidence": [
+        {
+          "address": "0x08015af2",
+          "length": 6,
+          "sha256": "ba9271a6151d710470730980fa4cf06ee22b55818b0b49c59e814955956d08bf",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "midi_object",
+      "kind": "ram_object",
+      "address": "0x200023f8",
+      "label": "midi_transport_object",
+      "status": "confirmed_static",
+      "summary": "Transport object with USB byte ring, serial parser and a separate serial-message copy ring. Published through global 0x200010e0 after construction.",
+      "evidence": [
+        {
+          "address": "0x08015054",
+          "length": 4,
+          "sha256": "e438ea3a2638bdced29c3f27a5fa2bdc404f59c51d0db03d2b9c8dbc9f599bde",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x080154d0",
+          "length": 4,
+          "sha256": "aa19161b80497ec057347774acdef9a0d02143059ed762be03a1c9adce6e54bd",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ],
+      "fields": [
+        {
+          "offset": "0x00",
+          "size": 4,
+          "name": "vptr",
+          "meaning": "Flash vtable 0x0801e9a8."
+        },
+        {
+          "offset": "0x138",
+          "size": 1,
+          "name": "usb_parser_state",
+          "meaning": "Running-status state 2 can follow a complete message."
+        },
+        {
+          "offset": "0x140",
+          "size": 4,
+          "name": "usb_write",
+          "meaning": "Byte-ring write index, 0..255."
+        },
+        {
+          "offset": "0x144",
+          "size": 4,
+          "name": "usb_read",
+          "meaning": "Equality with write means this ring is empty at the check."
+        },
+        {
+          "offset": "0x328",
+          "size": 1,
+          "name": "serial_parser_state",
+          "meaning": "Parser state is not equivalent to all work drained."
+        },
+        {
+          "offset": "0x330",
+          "size": 4,
+          "name": "serial_copy_write",
+          "meaning": "Copy-ring index, 0..31."
+        },
+        {
+          "offset": "0x334",
+          "size": 4,
+          "name": "serial_copy_read",
+          "meaning": "Separate from synchronous serial note handling."
+        }
+      ]
+    },
+    {
+      "id": "midi_vtable",
+      "kind": "flash_data",
+      "address": "0x0801e9a8",
+      "label": "midi_transport_vtable",
+      "status": "confirmed_static",
+      "summary": "Vtable data at a flash address. Its first entry is Thumb pointer 0x08010255, whose instruction address is 0x08010254.",
+      "evidence": [
+        {
+          "address": "0x0801e9a8",
+          "length": 4,
+          "sha256": "7e41d607d6742a8eaf1b743759384289df8df3e0f0bb6541e4309db6753873aa",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "usb_callback",
+      "kind": "function",
+      "address": "0x08015094",
+      "label": "usb_midi_input_callback",
+      "status": "supported",
+      "summary": "Reads the published transport object, then decodes received USB-MIDI packets when it exists.",
+      "evidence": [
+        {
+          "address": "0x08015094",
+          "length": 6,
+          "sha256": "d5aec60164333dbeeb3ffed2bd4310b834fa906a9856fc2016e70bb826130c56",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x080150a4",
+          "length": 4,
+          "sha256": "76cd7672a84e64646bacbf48e435919fe1a96b21dffffb8646457032bce7335e",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "usb_decode",
+      "kind": "function",
+      "address": "0x08010638",
+      "label": "decode_usb_midi_packets",
+      "status": "confirmed_static",
+      "summary": "Unpacks USB-MIDI CIN groups into a byte ring. Capacity checks can drop data before the accepted-message boundary.",
+      "evidence": [
+        {
+          "address": "0x08010638",
+          "length": 16,
+          "sha256": "e676b9c04353b9ed0492ff69e48d6459bd20f34677cf85142d7b5404091bf799",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801063a",
+          "length": 6,
+          "sha256": "d20056ac206a89388429e119fcedc95bced3a4e7a0d8bfd692d2cf635311cd9a",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x080106c0",
+          "length": 12,
+          "sha256": "040b9a64a0e7c7636640c470e95a517f51ca98c1fd92f8d284a7849073ebccb5",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "usb_parser",
+      "kind": "function",
+      "address": "0x0800fa64",
+      "label": "process_usb_midi_ring",
+      "status": "confirmed_static",
+      "summary": "Consumes at most 50 bytes per invocation, supports running status and separately handles real-time messages. Return does not imply the ring is empty.",
+      "evidence": [
+        {
+          "address": "0x0800fa64",
+          "length": 16,
+          "sha256": "c0ffe7fd1186bdc825863a405a6867e3dada53a6a8e7f8945ab7a9a2a54dabde",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0800fabc",
+          "length": 6,
+          "sha256": "b667118d5ae018e20527797a962097ae4b4f51b809035d3c8b816f093b9ec322",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0800fd30",
+          "length": 12,
+          "sha256": "cfe1dffbe5452961e290ab9120e5ea49f6f7cf98789ae471d5b4f5d98aa1b063",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "midi_receive",
+      "kind": "function",
+      "address": "0x08010254",
+      "label": "receive_parsed_midi",
+      "status": "confirmed_static",
+      "summary": "Parsed-message subscriber: origin, transport selection and channel filtering precede note routing.",
+      "evidence": [
+        {
+          "address": "0x08010254",
+          "length": 8,
+          "sha256": "5accbb9c0360152a007451c97199b1b829755df3b88800a15429cfc04228395a",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801031e",
+          "length": 12,
+          "sha256": "2421807f6b8b2d25e6702c7829f0b16465fc38578a06ffd4ea8d94e552963aa6",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "serial_midi_irq37",
+      "kind": "function",
+      "address": "0x08018624",
+      "label": "serial_midi_irq37",
+      "status": "confirmed_static",
+      "summary": "UART receive IRQ can call the serial byte parser before returning from IRQ context.",
+      "evidence": [
+        {
+          "address": "0x08018624",
+          "length": 16,
+          "sha256": "e180483e8b49e10c22203c417242d7d5e979f70ae4b33ece873c009efa7bf7e6",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x080040d4",
+          "length": 4,
+          "sha256": "29b99c8954c097ae99477c061b12146dc884a10b711c5982a7500da757f635c6",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801863a",
+          "length": 14,
+          "sha256": "fc0f373d6dd35d5f57c6ca3f1e4bc8afd1dbf2493bba59fec2c9a86edd9b1097",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "serial_parser",
+      "kind": "function",
+      "address": "0x0800fd5c",
+      "label": "parse_serial_midi_byte",
+      "status": "confirmed_static",
+      "summary": "Serial MIDI parser invoked from UART IRQ; input handling is not exclusively in the main loop.",
+      "evidence": [
+        {
+          "address": "0x0800fd5c",
+          "length": 16,
+          "sha256": "e575becd0e3b3944e7297a780d4a26011daa9434fb268a776e33d73d227037a4",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0800ffb4",
+          "length": 16,
+          "sha256": "4f4145f97a2e02ace10f0e18f1503166b1c7e091ed1b0283257d7dab6960daa4",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801082e",
+          "length": 8,
+          "sha256": "3f68c9d3df9f2619e32af214313e64e6bad09c93f4aea8fb69e2b522ae4cbe3f",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "input_source_prefilter_boundary",
+      "kind": "code_label",
+      "address": "0x08010310",
+      "label": "input_channel_prefilter_source_preserved",
+      "status": "confirmed_static",
+      "summary": "Internal label before channel filtering while source 0=USB or 1=DIN remains available. This is earlier than the pitch-only tracker.",
+      "evidence": [
+        {
+          "address": "0x0801b750",
+          "length": 14,
+          "sha256": "0b19bdb9d8c2daa751ec07f6736f9807d11c1d36a8d182ea49436e45d0d2c6a1",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801b75e",
+          "length": 16,
+          "sha256": "3f35cbcf0c7980894dd0c72e7c3217e9d421371c7e56ab060f25cd7f5d21e27e",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "note_input",
+      "kind": "function",
+      "address": "0x0801b750",
+      "label": "process_received_notes",
+      "status": "supported",
+      "summary": "Note processing entry used by scanner and MIDI. r2 is 0 for scanner and 1 for both MIDI ports; it does not distinguish USB from DIN.",
+      "evidence": [
+        {
+          "address": "0x0801b78a",
+          "length": 14,
+          "sha256": "ddea1ca17d11aeec413b672c36df0899db3481e47c8702d24ebb0f7f7a7232f9",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801b750",
+          "length": 14,
+          "sha256": "0b19bdb9d8c2daa751ec07f6736f9807d11c1d36a8d182ea49436e45d0d2c6a1",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "input_pitch_tracker",
+      "kind": "ram_object",
+      "address": "0x20001ebc",
+      "label": "raw_input_pitch_serial_tracker",
+      "status": "confirmed_static",
+      "summary": "Tracker embedded at note object +4: pitches from sources and channels merge into the same slots. Empty selected pitch is not global absence of held notes.",
+      "evidence": [
+        {
+          "address": "0x0801b75e",
+          "length": 16,
+          "sha256": "3f35cbcf0c7980894dd0c72e7c3217e9d421371c7e56ab060f25cd7f5d21e27e",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801c410",
+          "length": 16,
+          "sha256": "c55ec030c7c0aee41c83e9b158d8d60c38af2c65956a586dd49c19f45e888bd2",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ],
+      "fields": [
+        {
+          "offset": "0x02",
+          "size": 256,
+          "name": "serials",
+          "meaning": "One halfword per pitch, without source/channel multiplicity."
+        },
+        {
+          "offset": "0x102",
+          "size": 128,
+          "name": "velocities",
+          "meaning": "One byte per pitch."
+        },
+        {
+          "offset": "0x182",
+          "size": 2,
+          "name": "next_serial",
+          "meaning": "Serial number, not held count."
+        },
+        {
+          "offset": "0x184",
+          "size": 1,
+          "name": "selected",
+          "meaning": "Signed pitch; -1 is not a global idle proof."
+        }
+      ]
+    },
+    {
+      "id": "input_pitch_tracker_update",
+      "kind": "function",
+      "address": "0x0801c4ca",
+      "label": "update_pitch_serial_and_selection",
+      "status": "confirmed_static",
+      "summary": "Updates serial/velocity by pitch. A release clears that pitch without source/channel reference counts.",
+      "evidence": [
+        {
+          "address": "0x0801c4ca",
+          "length": 16,
+          "sha256": "33a4934d64f80d2a953fd1a0bb076587e144d4e5bdc5e967ea2337ea420b9e02",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801c4ec",
+          "length": 16,
+          "sha256": "437fdc244979bfd51e756db2e076ef44707c2b41b3a378b84586da8a62b4103a",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "keyboard_scanner",
+      "kind": "function",
+      "address": "0x0800cc48",
+      "label": "scan_keyboard_contacts",
+      "status": "confirmed_static",
+      "summary": "Physical keyboard contact scanner; feeds the common note input. A raw contact release must not erase an independently accepted MIDI owner.",
+      "evidence": [
+        {
+          "address": "0x0800cc48",
+          "length": 16,
+          "sha256": "35da11190e0cdae9066c6791a77b8c627ef18a74c41cfee83e99f5eb9fe70949",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0800cc80",
+          "length": 16,
+          "sha256": "1d4a2d79e10723ec6a121b7ef355881433dec5c6b40002c911f98c693eb39d1d",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0800cd62",
+          "length": 16,
+          "sha256": "baa4001c7c9558c7289f0c2f9198ad2f5ff32ad72c512b478e3306423239463d",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "sequence_state",
+      "kind": "ram_object",
+      "address": "0x20002c4c",
+      "label": "sequence_state_object",
+      "status": "confirmed_static",
+      "summary": "State object with current and pending block pointers. It is not the step array and is not a function pointer.",
+      "evidence": [
+        {
+          "address": "0x08014ec8",
+          "length": 4,
+          "sha256": "2a4ce082de78e2d35b22270498395a53a2bfca04e73e719c259e3f4c94899e80",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08013020",
+          "length": 4,
+          "sha256": "741315990e06371f15fc406c0bb6f95c6762a0d75e095eb9989cc22a782eb420",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ],
+      "fields": [
+        {
+          "offset": "0x00",
+          "size": 4,
+          "name": "current",
+          "meaning": "Pointer to block, not block bytes."
+        },
+        {
+          "offset": "0x04",
+          "size": 4,
+          "name": "pending",
+          "meaning": "Pointer retained after application."
+        }
+      ]
+    },
+    {
+      "id": "sequence_block",
+      "kind": "ram_data",
+      "address": "0x20002e94",
+      "label": "sequence_block_slot0",
+      "status": "confirmed_static",
+      "summary": "Slot 0 example of eight 0x408-byte sequence blocks. 64 steps by 8 voices by 2 bytes, followed by an 8-byte header. No vtable is established for these blocks.",
+      "evidence": [
+        {
+          "address": "0x080130e8",
+          "length": 12,
+          "sha256": "28b1fab258ff3aacbbbb1306c43123fef8b8b248caceec5c0819afc74b364566",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x080130f4",
+          "length": 14,
+          "sha256": "3dde219253b715b4dfc2d791962b79854740d5fab37c627ac89e10f95e5ad595",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ],
+      "fields": [
+        {
+          "offset": "0x000",
+          "size": 1024,
+          "name": "steps",
+          "meaning": "64 x 8 pairs: pitch/marker, velocity/flag."
+        },
+        {
+          "offset": "0x400",
+          "size": 1,
+          "name": "length",
+          "meaning": "Maximum 64; zero requires explicit handling in extensions."
+        },
+        {
+          "offset": "0x401",
+          "size": 1,
+          "name": "swing",
+          "meaning": "Timing field; not reloaded with every pointer swap."
+        },
+        {
+          "offset": "0x402",
+          "size": 1,
+          "name": "gate",
+          "meaning": "Native gate amount."
+        },
+        {
+          "offset": "0x403",
+          "size": 1,
+          "name": "flags",
+          "meaning": "Partial semantics; preserve unknown bits."
+        },
+        {
+          "offset": "0x404",
+          "size": 1,
+          "name": "retain_selector",
+          "meaning": "Value 1 selects the saved retain request."
+        },
+        {
+          "offset": "0x405",
+          "size": 3,
+          "name": "unknown",
+          "meaning": "Preserve; semantics not established."
+        }
+      ]
+    },
+    {
+      "id": "working_block",
+      "kind": "ram_data",
+      "address": "0x200027e4",
+      "label": "working_sequence_block",
+      "status": "confirmed_static",
+      "summary": "Working phrase selected at startup and owned by native builder/mode paths. It is not an available scratch block.",
+      "evidence": [
+        {
+          "address": "0x08015618",
+          "length": 12,
+          "sha256": "c7213d91aabbda87846ee99c45faafaa0e0099e0300cd67c7f5aa84f505aba6f",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x080156fc",
+          "length": 12,
+          "sha256": "70f232f07883dac38c0e1b710bc1b7a831555588f80f53e47b307b3a1e6aba13",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "sequence_controller",
+      "kind": "ram_object",
+      "address": "0x20002bec",
+      "label": "sequence_controller",
+      "status": "confirmed_static",
+      "summary": "Scheduler object with cached length, timing state, division requests and separate block/rebuild requests. Field knowledge is partial.",
+      "evidence": [
+        {
+          "address": "0x08015304",
+          "length": 16,
+          "sha256": "1771e3a00727233e16148a44d8c1561ea49ddb78cfea6dd38d5da10c85ec624e",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x080120b0",
+          "length": 4,
+          "sha256": "e154742555e426f457fc3d22a608abe203b77c61186fccc249e7e8f2c4ab7be0",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ],
+      "fields": [
+        {
+          "offset": "0x04",
+          "size": 1,
+          "name": "emit_enabled",
+          "meaning": "Zero does not distinguish Stop from Pause."
+        },
+        {
+          "offset": "0x05",
+          "size": 1,
+          "name": "paused",
+          "meaning": "Native Pause differs from Stop/reset."
+        },
+        {
+          "offset": "0x0c",
+          "size": 1,
+          "name": "transport_selector",
+          "meaning": "Partial mode semantics; not a complete source proof."
+        },
+        {
+          "offset": "0x10",
+          "size": 1,
+          "name": "cached_length",
+          "meaning": "Must agree with block/timer in a length transition."
+        },
+        {
+          "offset": "0x38",
+          "size": 4,
+          "name": "last_effective_step",
+          "meaning": "Effective step selected for emission."
+        },
+        {
+          "offset": "0x44",
+          "size": 4,
+          "name": "release_deadline",
+          "meaning": "Internal phase threshold."
+        },
+        {
+          "offset": "0x48",
+          "size": 1,
+          "name": "division",
+          "meaning": "Current division index."
+        },
+        {
+          "offset": "0x49",
+          "size": 1,
+          "name": "next_division",
+          "meaning": "Requested index."
+        },
+        {
+          "offset": "0x4c",
+          "size": 4,
+          "name": "state",
+          "meaning": "Pointer to sequence_state."
+        },
+        {
+          "offset": "0x50",
+          "size": 4,
+          "name": "consumer",
+          "meaning": "Pointer to step_consumer."
+        },
+        {
+          "offset": "0x54",
+          "size": 1,
+          "name": "division_request",
+          "meaning": "Request and target may have different lifetimes."
+        },
+        {
+          "offset": "0x55",
+          "size": 1,
+          "name": "division_target",
+          "meaning": "Can survive emission when swing changes the effective step."
+        },
+        {
+          "offset": "0x56",
+          "size": 1,
+          "name": "block_request",
+          "meaning": "Separate from state.pending pointer."
+        },
+        {
+          "offset": "0x57",
+          "size": 1,
+          "name": "block_target",
+          "meaning": "Signed candidate index; 0xff disables target."
+        },
+        {
+          "offset": "0x5d",
+          "size": 1,
+          "name": "rebuild_request",
+          "meaning": "Builder request."
+        },
+        {
+          "offset": "0x5e",
+          "size": 1,
+          "name": "rebuild_target",
+          "meaning": "Signed candidate index."
+        }
+      ]
+    },
+    {
+      "id": "step_consumer",
+      "kind": "ram_object",
+      "address": "0x20004ed4",
+      "label": "sequence_step_consumer",
+      "status": "confirmed_static",
+      "summary": "Playback object points to sequence state and retains the emitted pitches/channel for Note Off. Reinitializing it can discard note ownership.",
+      "evidence": [
+        {
+          "address": "0x080152f4",
+          "length": 16,
+          "sha256": "17b4ccda69f36be7f03ea09bc1e239fc832d3c3ec94342a3b349db28971d7f21",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08015460",
+          "length": 12,
+          "sha256": "962ff275ab31d24b05f2c8920c60bd8a96623cd1777fe5a6288c372b457669ff",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ],
+      "fields": [
+        {
+          "offset": "0x00",
+          "size": 4,
+          "name": "state",
+          "meaning": "Pointer to sequence_state."
+        },
+        {
+          "offset": "0x04",
+          "size": 1,
+          "name": "channel",
+          "meaning": "Saved channel for Note Off."
+        },
+        {
+          "offset": "0x05",
+          "size": 8,
+          "name": "active_pitches",
+          "meaning": "Actually emitted pitches, terminated by 0xff."
+        },
+        {
+          "offset": "0x0d",
+          "size": 8,
+          "name": "old_pitches",
+          "meaning": "Retained-note matching list; internal match marker 0xfe."
+        },
+        {
+          "offset": "0x25",
+          "size": 1,
+          "name": "release_enabled",
+          "meaning": "Release guard."
+        },
+        {
+          "offset": "0x27",
+          "size": 1,
+          "name": "release_suppressed",
+          "meaning": "Nonzero suppresses ordinary release."
+        },
+        {
+          "offset": "0x28",
+          "size": 1,
+          "name": "retain_request",
+          "meaning": "Early marker paths can preserve it."
+        }
+      ]
+    },
+    {
+      "id": "service_sequence",
+      "kind": "function",
+      "address": "0x080129cc",
+      "label": "service_sequence_controller",
+      "status": "confirmed_static",
+      "summary": "Calculates candidate/effective step, applies some pending operations, emits notes and checks gate release. Swing, retiming and transport can change the effective step.",
+      "evidence": [
+        {
+          "address": "0x080129cc",
+          "length": 16,
+          "sha256": "0e98990b4dc36c32bdbf45f3629883b4dae1873e25987a10f89c2b5a37156ef5",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08015768",
+          "length": 8,
+          "sha256": "170cf0f6eb256d29af68befc4461a0c3d7896a9aa5aa1a541629e7dea6fd7eda",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x080159c0",
+          "length": 4,
+          "sha256": "66197a7346251d6c8cf82c01a7dacde5d6d09b689355fee89edc80bba92fbc18",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "read_phase_counter",
+      "kind": "function",
+      "address": "0x08011e44",
+      "label": "read_sequence_counter",
+      "status": "confirmed_static",
+      "summary": "Reads the low 16 bits of the configured timer counter. These units are not milliseconds.",
+      "evidence": [
+        {
+          "address": "0x08011e44",
+          "length": 10,
+          "sha256": "7f96042fa7a9f33dc7076c0acea92b5755db473a1a6b74df6ab84867fab4e4ea",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08011e50",
+          "length": 4,
+          "sha256": "bb8953a8c0303ef8a3a3ec579bf40d3e61fb2b9d14b971f778de44ce35b2284a",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "step_divisor",
+      "kind": "function",
+      "address": "0x08011e0c",
+      "label": "lookup_step_divisor",
+      "status": "confirmed_static",
+      "summary": "Indices 0..7 return [480,240,120,60,320,160,80,40]; other indices return 120.",
+      "evidence": [
+        {
+          "address": "0x08011e0c",
+          "length": 8,
+          "sha256": "2807c4054b6267313adf0f426bfd3f53c3db529d608be05bfb7dded5feffa7b2",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08011e14",
+          "length": 8,
+          "sha256": "b9e10d3640c1146d568210dc27257991ba87c5f2f5eb8316cacba2f5edb6bc0d",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "step_playback_call_boundary",
+      "kind": "code_label",
+      "address": "0x08012ec0",
+      "label": "selected_step_to_note_consumer",
+      "status": "confirmed_static",
+      "summary": "Internal BL instruction to the step consumer, after the effective index is stored. Observing this site alone does not identify a complete musical cycle.",
+      "evidence": [
+        {
+          "address": "0x08012eb2",
+          "length": 16,
+          "sha256": "2b046688277ab26184a2c3c450917caeff185f78b7d659845a53d170f788b8db",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08012ec0",
+          "length": 4,
+          "sha256": "ed786a4b17941894b3aa6b1f3244c3fca888e24b3769e1e2d6d31494b27ad2db",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "step_playback",
+      "kind": "function",
+      "address": "0x08013e8c",
+      "label": "emit_sequence_step_notes",
+      "status": "confirmed_static",
+      "summary": "Reads voices/markers, reconciles retained notes, transforms pitch and emits Note On. In builder mode 5 an earlier branch can substitute the input step index.",
+      "evidence": [
+        {
+          "address": "0x08013e8c",
+          "length": 12,
+          "sha256": "1775367cae935ae749ca8062805000be1c58b17cd546c0410bc0d76fd0d5ead8",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08013fde",
+          "length": 8,
+          "sha256": "7b9691ecf2b9a4af6942c1a86c60565606f4bad992bde35170017f3d122ecb39",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "read_pitch",
+      "kind": "function",
+      "address": "0x080130e8",
+      "label": "read_step_voice_pitch",
+      "status": "confirmed_static",
+      "summary": "Reads current_block[16*step+2*voice]. No independent ownership or lifetime check is implied.",
+      "evidence": [
+        {
+          "address": "0x080130e8",
+          "length": 12,
+          "sha256": "28b1fab258ff3aacbbbb1306c43123fef8b8b248caceec5c0819afc74b364566",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "read_velocity",
+      "kind": "function",
+      "address": "0x080130f4",
+      "label": "read_step_voice_velocity_flags",
+      "status": "confirmed_static",
+      "summary": "Reads current_block[16*step+2*voice+1]. Low seven bits are velocity; voice 0 bit 7 affects retention.",
+      "evidence": [
+        {
+          "address": "0x080130f4",
+          "length": 14,
+          "sha256": "3dde219253b715b4dfc2d791962b79854740d5fab37c627ac89e10f95e5ad595",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "write_cell",
+      "kind": "function",
+      "address": "0x080130cc",
+      "label": "write_step_voice_pair",
+      "status": "confirmed_static",
+      "summary": "Writes a pitch/velocity pair into the current block. It does not by itself establish exclusive ownership or complete block initialization.",
+      "evidence": [
+        {
+          "address": "0x080130cc",
+          "length": 16,
+          "sha256": "f1558a03b5bd6b5291cc948e9b733b67174fc47af084d99a1ff620872216bd45",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "gate_deadline",
+      "kind": "code_label",
+      "address": "0x08012f8e",
+      "label": "compute_plain_gate_deadline",
+      "status": "confirmed_static",
+      "summary": "Plain gate branch: step*D + max(15,min(D-1,floor((D-1)*G/100))) for ordinary positive D/G. Swing branches require separate analysis.",
+      "evidence": [
+        {
+          "address": "0x08012ede",
+          "length": 12,
+          "sha256": "c198eb422878d0344800dff4735ae839052688751eb6641a3de694d827c06f5a",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08012f8e",
+          "length": 16,
+          "sha256": "8edbcbc202bd355efae00c65e693a4ee284eebbc36e522689e58a0d8ff0d2da2",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "release_step",
+      "kind": "function",
+      "address": "0x0801415c",
+      "label": "release_sequence_step",
+      "status": "confirmed_static",
+      "summary": "Conditional release: examines current-block retention metadata, then sends Note Off from saved output pitches. It is not unconditional all-notes-off.",
+      "evidence": [
+        {
+          "address": "0x0801415c",
+          "length": 16,
+          "sha256": "6758b66a3966352496256203e12ca590cbfde230507b832de117bf0835d1fed2",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801416e",
+          "length": 16,
+          "sha256": "48c9f72895203490837f68b537a784dc68c1c4b867ec4e8e49eba5d175812a0d",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08014194",
+          "length": 16,
+          "sha256": "f80aeb4c08aa043141365656e5de2c0a869be736aab0a92387184cc1e02d3155",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "immediate_consumer_note_cleanup",
+      "kind": "function",
+      "address": "0x08014258",
+      "label": "release_saved_notes_without_step_ties",
+      "status": "confirmed_static",
+      "summary": "Sends saved Note Off messages without step tie checks. It does not clear the retained-request byte at consumer+0x28.",
+      "evidence": [
+        {
+          "address": "0x08014258",
+          "length": 8,
+          "sha256": "baf1843386cc8b0ad44cfacc0cfdc521e17cd6b4d5e861d86d51a1c0c026e064",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x080142a8",
+          "length": 4,
+          "sha256": "0c348d67c27b403ba780c8329cac0ad8123425f63b6f331175dd771f40f6fd43",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "retain_mode",
+      "kind": "function",
+      "address": "0x08013934",
+      "label": "uses_saved_retain_request",
+      "status": "confirmed_static",
+      "summary": "Tests current block +0x404 == 1; selects saved retention request versus per-step retention metadata. UI naming is unresolved.",
+      "evidence": [
+        {
+          "address": "0x08013934",
+          "length": 16,
+          "sha256": "8da59133069b78b86ece0ec8318cba4811b27d1d37164f7a5a21568a1dc06f05",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "note_output",
+      "kind": "function",
+      "address": "0x0801b6c4",
+      "label": "accept_sequence_note_message",
+      "status": "supported",
+      "summary": "Receives already assembled sequence Note On and Note Off messages on the shared note object. Full downstream MIDI/CV routing is not mapped.",
+      "evidence": [
+        {
+          "address": "0x0801b6c4",
+          "length": 16,
+          "sha256": "bfd892fad8ed5842f7a1bc9b40c3ad7154574aad68341f3e9d6937770c754fbd",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801407c",
+          "length": 4,
+          "sha256": "19ec024619ca074901452447e93f65993493095f0a93945c222618006609607a",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08014140",
+          "length": 4,
+          "sha256": "09a430446b8d375a17ffb250fc9866d8ce5b66de0adfad39dbbd359d3965b2a3",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "select_block",
+      "kind": "function",
+      "address": "0x08013020",
+      "label": "set_current_sequence_block",
+      "status": "confirmed_static",
+      "summary": "Stores a block pointer in state+0. An aligned store does not publish all dependent timing and reader state.",
+      "evidence": [
+        {
+          "address": "0x08016a74",
+          "length": 14,
+          "sha256": "4befe65572594a7832c46e44b2446d8a347fe9080ffe4f8124f47409c2ffe8a5",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08013020",
+          "length": 4,
+          "sha256": "741315990e06371f15fc406c0bb6f95c6762a0d75e095eb9989cc22a782eb420",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "set_pending_block",
+      "kind": "function",
+      "address": "0x08013024",
+      "label": "set_pending_sequence_block",
+      "status": "confirmed_static",
+      "summary": "Stores a block pointer in state+4; request flags are controlled separately.",
+      "evidence": [
+        {
+          "address": "0x08013024",
+          "length": 4,
+          "sha256": "35670bb79141dd43ff99efdf7b3389dba10de780c792cf02a685a59f85553750",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "apply_pending_block",
+      "kind": "function",
+      "address": "0x08013028",
+      "label": "apply_pending_sequence_block",
+      "status": "confirmed_static",
+      "summary": "Copies pending pointer into current without copying the block or clearing pending.",
+      "evidence": [
+        {
+          "address": "0x08013028",
+          "length": 6,
+          "sha256": "315feea534d275851c0b80ee0f7474c9abf1fc94bd4ec52c83dc1f858c4ca3e6",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "request_slot_change",
+      "kind": "function",
+      "address": "0x08017ed0",
+      "label": "handle_slot_or_builder_mode",
+      "status": "confirmed_static",
+      "summary": "Mode-dependent handler chooses a native sequence slot or changes builder mode. A mode change can trigger delayed slot publication.",
+      "evidence": [
+        {
+          "address": "0x08017ed0",
+          "length": 16,
+          "sha256": "900b526075dd456c5e9979f612cc433fa3271dc998c3db163f8238872894565a",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08017ef0",
+          "length": 16,
+          "sha256": "f47d83a013e7a85cb09f3b30a14f36a1531f96149153c283e2eab831e9bc6bd8",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "phrase_builder",
+      "kind": "ram_object",
+      "address": "0x2000063c",
+      "label": "phrase_builder",
+      "status": "confirmed_static",
+      "summary": "Builder uses an editable unique-pitch pool, deferred releases, PRNG and traversal state. It is not an immutable recording of rhythm or repeated notes.",
+      "evidence": [
+        {
+          "address": "0x08015624",
+          "length": 16,
+          "sha256": "846a4abab35499215e37bc4d682038e5736682e64305b0b53e34877e358c68ce",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08015708",
+          "length": 16,
+          "sha256": "9aae3c3bc9ab932132dbf1ee6196082a4f7aeb74623afd518ddea82ccf97c44a",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "primary_note_list",
+      "kind": "ram_object",
+      "address": "0x20002dfc",
+      "label": "primary_note_list",
+      "status": "confirmed_static",
+      "summary": "Up to 32 unique pitch/velocity pairs in insertion order, with a separate index array sorted by pitch.",
+      "evidence": [
+        {
+          "address": "0x08015708",
+          "length": 16,
+          "sha256": "9aae3c3bc9ab932132dbf1ee6196082a4f7aeb74623afd518ddea82ccf97c44a",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08013de8",
+          "length": 16,
+          "sha256": "7268b8b199837449c3ff420a128cd272d034a45a7504131024fef52b3f086c99",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ],
+      "fields": [
+        {
+          "offset": "0x00",
+          "size": 1,
+          "name": "count",
+          "meaning": "At most 32 unique pitches."
+        },
+        {
+          "offset": "0x01",
+          "size": 64,
+          "name": "pairs",
+          "meaning": "Insertion order."
+        },
+        {
+          "offset": "0x41",
+          "size": 32,
+          "name": "sorted_indices",
+          "meaning": "Ascending pitch view."
+        },
+        {
+          "offset": "0x61",
+          "size": 32,
+          "name": "sort_marks",
+          "meaning": "Scratch marks; not a claimed total allocation size."
+        }
+      ]
+    },
+    {
+      "id": "deferred_release_pool",
+      "kind": "ram_object",
+      "address": "0x20002d0c",
+      "label": "deferred_release_pool",
+      "status": "confirmed_static",
+      "summary": "Holds deferred pitch removals. It is not a faithful physical-key ledger and not a backup of a phrase.",
+      "evidence": [
+        {
+          "address": "0x08015708",
+          "length": 16,
+          "sha256": "9aae3c3bc9ab932132dbf1ee6196082a4f7aeb74623afd518ddea82ccf97c44a",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08011772",
+          "length": 16,
+          "sha256": "3f15a57db5891cf78f2e57bb9370928c68e8eea4c8dbff128604c6c8b3f10138",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "builder_note_input",
+      "kind": "function",
+      "address": "0x080116e0",
+      "label": "handle_builder_note_message",
+      "status": "confirmed_static",
+      "summary": "Routes accepted Note On/releases into primary or deferred pools according to hold and UI state.",
+      "evidence": [
+        {
+          "address": "0x080116e0",
+          "length": 16,
+          "sha256": "85a37a582a4062acfc0a5e01d7ae8405fe06351ec2fd8920cacd66d725570b5f",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08011724",
+          "length": 16,
+          "sha256": "36e1772d2c0a8a0055c766b7322213809d7261ad48f3e85c97fd961229fcd03e",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "note_pool_append",
+      "kind": "function",
+      "address": "0x08013cdc",
+      "label": "append_unique_pitch",
+      "status": "confirmed_static",
+      "summary": "Appends when capacity is available and pitch is absent; duplicate pitch does not replace its velocity.",
+      "evidence": [
+        {
+          "address": "0x08013cdc",
+          "length": 16,
+          "sha256": "6533f06f25c7ddf8330be5361c6e3be3ccdd8f7185abab380f8bdd11161c4285",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08013cbe",
+          "length": 16,
+          "sha256": "654cff5f8564a11cbb9e3b16402206d7ee39405ebed0d3bd2dce4e6ac3eedd5c",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "note_pool_remove",
+      "kind": "function",
+      "address": "0x08013d18",
+      "label": "remove_pitch_from_pool",
+      "status": "confirmed_static",
+      "summary": "Removes a pitch and compacts pairs without rebuilding the sorted index array.",
+      "evidence": [
+        {
+          "address": "0x08013d18",
+          "length": 16,
+          "sha256": "08d85b8c74fa7cbcdbdb1d89687b8c95f25322207966478b7bfb773a6bd0a376",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "note_pool_sort",
+      "kind": "function",
+      "address": "0x08013dac",
+      "label": "build_ascending_pitch_indices",
+      "status": "confirmed_static",
+      "summary": "Rebuilds ascending-pitch indices without moving stored pairs.",
+      "evidence": [
+        {
+          "address": "0x08013d5c",
+          "length": 16,
+          "sha256": "3cca3d0e2b53b2f82c23ac2380600f252211461c9c009fcfd328a0de7d82c921",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08013dac",
+          "length": 16,
+          "sha256": "8f7a192dd300719aa86a98f9ce9379c141c732539942604f74a53b9ad83df84b",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "request_phrase_rebuild",
+      "kind": "function",
+      "address": "0x08011efc",
+      "label": "request_phrase_rebuild",
+      "status": "confirmed_static",
+      "summary": "Sets controller+0x5d only when the relevant UI byte +0x0f is zero. Actual rebuild occurs during service.",
+      "evidence": [
+        {
+          "address": "0x08011efc",
+          "length": 16,
+          "sha256": "b9108a6158f6aa187e2826a6e580e2633ad0bde0503dead7e451c6b2d55f1c20",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08011f0c",
+          "length": 4,
+          "sha256": "1a19161dcf9843d31d16c58ed036d1a59a57caff6a95b692401ca89a394ffb31",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "rebuild_phrase",
+      "kind": "function",
+      "address": "0x08011a1c",
+      "label": "rebuild_current_phrase",
+      "status": "confirmed_static",
+      "summary": "Dispatches eight builder modes. Modes 2 and 3 already produce two distinct bidirectional orders. Writes voice 0 in the current block in place.",
+      "evidence": [
+        {
+          "address": "0x08011a1c",
+          "length": 16,
+          "sha256": "5696baf51e9a599d0cf0672a51f0c44345cec791c095ca35d047cc78074047b0",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08011a3c",
+          "length": 16,
+          "sha256": "47f13f120f2f38c9f787f836fc88205550ddb99105cc1aab2e9ea5bf066f4d08",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "builder_prng",
+      "kind": "function",
+      "address": "0x0801181c",
+      "label": "advance_builder_prng",
+      "status": "confirmed_static",
+      "summary": "32-bit pseudorandom state used by native random selection and walking; distinct from a saved musical phrase.",
+      "evidence": [
+        {
+          "address": "0x0801181c",
+          "length": 16,
+          "sha256": "53123121524b77b165e82f47df25246c1c610435c2a2498c6e8f6ff80c2f1d37",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08011848",
+          "length": 12,
+          "sha256": "e78cdb22d62d1f65bc6651cd3a52b450101d52402cd71eceeb3edf434afa3548",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "random_note_index",
+      "kind": "function",
+      "address": "0x08011854",
+      "label": "choose_random_pool_index",
+      "status": "confirmed_static",
+      "summary": "Native random pool-index selection allows repeats and does not establish a uniform distribution for every pool size.",
+      "evidence": [
+        {
+          "address": "0x08011854",
+          "length": 16,
+          "sha256": "97dcea0eb93a8d671483076992192a573f08489f246f1d134ee344ca77e18718",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "walk_note_index",
+      "kind": "function",
+      "address": "0x08011878",
+      "label": "walk_storage_order_index",
+      "status": "confirmed_static",
+      "summary": "Mode 5 storage-order walk can go back, stay or advance. The stay branch does not normalize a stale index after a pool shrinks.",
+      "evidence": [
+        {
+          "address": "0x08011878",
+          "length": 16,
+          "sha256": "f8e3ad3caca9c609c6bb5c69bb41bccd76d227722fc838419449cb48a7a3c0a1",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "generate_random_phrase",
+      "kind": "function",
+      "address": "0x0801196c",
+      "label": "generate_random_note_batch",
+      "status": "confirmed_static",
+      "summary": "Mode 6 generates a batch with optional octave movement. Signed requested length must be constrained before any write.",
+      "evidence": [
+        {
+          "address": "0x0801196c",
+          "length": 16,
+          "sha256": "3dae2699edf8fc44d6707b664c8684debe8cc78a6f2dd9f0667240d152e6a3a7",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08011986",
+          "length": 16,
+          "sha256": "08e1f58696dedae4f8bd2570a423a64b5e4e07f1c62872748aa20f86735afc6c",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x080119b0",
+          "length": 16,
+          "sha256": "da52d185812d01f8123aef6768995e3fa642b2a56ec8449f2c7e6e99452ae040",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "transport_action",
+      "kind": "function",
+      "address": "0x08012334",
+      "label": "apply_transport_action",
+      "status": "confirmed_static",
+      "summary": "Native transport distinguishes Stop/reset from Pause: both disable emission, but pause state and cleanup differ.",
+      "evidence": [
+        {
+          "address": "0x08012334",
+          "length": 16,
+          "sha256": "3cdddd536e013285cfd2886a357c748ff760cae532d9e26e4d602410300e7db0",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801234e",
+          "length": 10,
+          "sha256": "ba3ef68847c45da3311318c2f7c64ae80669f5e02ed83a20e89ca8ae344c8880",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "sequence_absolute_phase_irq30",
+      "kind": "function",
+      "address": "0x080185cc",
+      "label": "increment_absolute_phase_irq30",
+      "status": "confirmed_static",
+      "summary": "IRQ entry participates in updating the absolute phase word; IRQ can occur between native phase reads.",
+      "evidence": [
+        {
+          "address": "0x080040b8",
+          "length": 4,
+          "sha256": "601a9173693155a269bbe0bd604df201f31de9242242f0e0a2d4e547b6297296",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x080185cc",
+          "length": 16,
+          "sha256": "df23a2f57a75cb71bd79b7adf1c1c641eda446fb6f3f25a4e7d7f6638a59c6a8",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "sequence_absolute_phase_word",
+      "kind": "ram_data",
+      "address": "0x200000bc",
+      "label": "absolute_phase_word",
+      "status": "confirmed_static",
+      "summary": "Absolute phase RAM word read twice in the Time Div path with an intervening IRQ opportunity.",
+      "evidence": [
+        {
+          "address": "0x080185e0",
+          "length": 8,
+          "sha256": "39b30a21390ae65a02d3c894180e02c5f55a5eb3f4a065406c8bc32290887d22",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08012c6a",
+          "length": 16,
+          "sha256": "e930888147f0653aada786def444411d2a48b3583b760ff5b8bf579b558133a4",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "control_raw_change_boundary",
+      "kind": "code_label",
+      "address": "0x08004930",
+      "label": "accepted_control_raw_change_before_page_gate",
+      "status": "confirmed_static",
+      "summary": "Internal accepted raw-control-change boundary before page routing. Raw changes and quantized 7-bit changes are different events.",
+      "evidence": [
+        {
+          "address": "0x08004918",
+          "length": 16,
+          "sha256": "220b3f378aa500cf7d49851ebd4f87c03f03b488dc2b13eaabe1c9854654536e",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08004930",
+          "length": 4,
+          "sha256": "270126f0333f0ea764965773e2596339fcaad4dccbba4d1258ed8f78da8fba49",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "button_dispatch",
+      "kind": "function",
+      "address": "0x08017260",
+      "label": "dispatch_button_action",
+      "status": "confirmed_static",
+      "summary": "Native button router, also reachable from external transport IRQ through a guarded path. Main-loop ordering alone cannot serialize it.",
+      "evidence": [
+        {
+          "address": "0x08017260",
+          "length": 16,
+          "sha256": "be2e827d123990bdca06cd760e92b8e8834fac043e33b2f9c4db0c4608e6d8a5",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08017286",
+          "length": 16,
+          "sha256": "ffa9618049f541a7085ba9548b525aeaf7306f45723273cabbe4ad9e6e290ca1",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "external_transport_irq9",
+      "kind": "function",
+      "address": "0x080184f0",
+      "label": "external_transport_irq9",
+      "status": "confirmed_static",
+      "summary": "Guarded IRQ path can dispatch a native transport action through the button router.",
+      "evidence": [
+        {
+          "address": "0x080184f0",
+          "length": 16,
+          "sha256": "8f49c5a31e77182707f39c6505bb73e59cfd63d5258a17d96850c48cc0268301",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x08004064",
+          "length": 4,
+          "sha256": "91a6da1a74fd697a2fc5604eeff05b3d57e22b7c4abdee3a105b2274d22e3a00",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0801855c",
+          "length": 16,
+          "sha256": "838267f26ad3f89d1fad8a8a8fb95809f5658af35f1d2cc6ebedbbfe454ecb3d",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "keyled_writer",
+      "kind": "function",
+      "address": "0x0800d26e",
+      "label": "write_keyled_color",
+      "status": "confirmed_static",
+      "summary": "Encodes pixel components directly into the live DMA source buffer. Main-loop overlay ordering does not imply a coherent published frame.",
+      "evidence": [
+        {
+          "address": "0x0800d26e",
+          "length": 16,
+          "sha256": "479a39927046b0477639d05440c8d2eb328e8323a61852ec4f0f7166ce1871a6",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0800d2ac",
+          "length": 16,
+          "sha256": "e3421fbeb6384ad61ef72125e7324c875618fc6de62bc07c627859b4aa2a3e44",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "keyled_refresh",
+      "kind": "function",
+      "address": "0x0800d1f8",
+      "label": "submit_keyled_if_changed",
+      "status": "confirmed_static",
+      "summary": "Starts timer DMA when revision state differs. Ready/transfer-complete alone is not proof that all source readers have released ownership.",
+      "evidence": [
+        {
+          "address": "0x0800d1f8",
+          "length": 16,
+          "sha256": "c67889ea6d62929ef918b8f65c511de33cc5524687349969399b3dcde5505312",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0800d22c",
+          "length": 4,
+          "sha256": "5e40c798da815bc0851aa988b0ab35ff7f24495c578d5fc59cdc87e481754ff6",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    },
+    {
+      "id": "keyled_dma_start",
+      "kind": "function",
+      "address": "0x0800b6ec",
+      "label": "start_timer_dma_output",
+      "status": "confirmed_static",
+      "summary": "Timer DMA submission helper. Hardware register layout and reader lifetime require separate validation.",
+      "evidence": [
+        {
+          "address": "0x0800b6ec",
+          "length": 16,
+          "sha256": "e0b177ebc95400330abfff3397c35ab3d5c1fe92f3442f6b4cc400cd9878dc6f",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0800b6ee",
+          "length": 16,
+          "sha256": "42e7095dd6e964286a0deec78bc840470ffabd327121e5e5273c2b03206875e9",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        },
+        {
+          "address": "0x0800b710",
+          "length": 13,
+          "sha256": "e9a3e19980876caf1af6383d0d00db1bb6219565437d6ca29817bddfbd211442",
+          "claim": "Identity anchor; interpretation requires the surrounding control and data flow."
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "loop",
+      "target": "usb_parser",
+      "kind": "direct_call",
+      "site": "0x080157ae",
+      "condition": "First of two USB parser calls in this pass.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x080157ae",
+          "length": 4,
+          "sha256": "97e566be76e325a2e28680aa42ff2bacb9974d61728195cc4e7ac66e3a1b30db",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "loop",
+      "target": "service_sequence",
+      "kind": "direct_call",
+      "site": "0x080157b4",
+      "condition": "Service after the acquired-contact frame and USB parsing.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x080157b4",
+          "length": 4,
+          "sha256": "3f60df8c37ce54ac1c435dc05a8b37213ee10bcad87994ab059c3281a9e58f56",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "usb_callback",
+      "target": "usb_decode",
+      "kind": "direct_call",
+      "site": "0x080150a4",
+      "condition": "Published shared transport object exists.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x080150a4",
+          "length": 4,
+          "sha256": "76cd7672a84e64646bacbf48e435919fe1a96b21dffffb8646457032bce7335e",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "midi_receive",
+      "target": "note_input",
+      "kind": "direct_call",
+      "site": "0x08010326",
+      "condition": "Accepted channel/routing branch; r2=1 for both MIDI ports.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08010326",
+          "length": 4,
+          "sha256": "4d41bd056db87bd3c776bb1bf750d552386475a6dbb1c2f1c7adc641afb4bd4b",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "serial_midi_irq37",
+      "target": "serial_parser",
+      "kind": "direct_call",
+      "site": "0x08018644",
+      "condition": "UART receive/enable guards and nonzero shared object.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08018644",
+          "length": 4,
+          "sha256": "475e5d723a774c8a321f615e4c22baf86b12ed547a5a23c90b6913f96fabc878",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "note_input",
+      "target": "input_pitch_tracker_update",
+      "kind": "direct_call",
+      "site": "0x0801b76c",
+      "condition": "Common merged tracker before later UI routing.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x0801b76c",
+          "length": 4,
+          "sha256": "df12c926d74b2b47355d4a8b18ae273d2fa63ddd8d754fb90fc224ff16d14d97",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "keyboard_scanner",
+      "target": "note_input",
+      "kind": "direct_call",
+      "site": "0x0800cdfa",
+      "condition": "First scanner Note On path; r2=0.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x0800cdfa",
+          "length": 4,
+          "sha256": "71dd7ac64d195ed7c1ce4792a5f65f40790818580b8e1cc583033512fdc9f1e3",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "keyboard_scanner",
+      "target": "note_input",
+      "kind": "direct_call",
+      "site": "0x0800d064",
+      "condition": "Scanner release path; r2=0.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x0800d064",
+          "length": 4,
+          "sha256": "eea159ccda7f6c69e73d47be48a88f1ae04a8627dbe1ae30eb5e2bc8e2c36d58",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "note_input",
+      "target": "builder_note_input",
+      "kind": "direct_call",
+      "site": "0x0801be18",
+      "condition": "Reached builder Note On route.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x0801be18",
+          "length": 4,
+          "sha256": "d4d516a7553cf0d86611b75abc49e84ddd9fd6073631cfc23e6e7cf3b0c438e4",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "note_input",
+      "target": "builder_note_input",
+      "kind": "direct_call",
+      "site": "0x0801bf9c",
+      "condition": "Reached builder release route.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x0801bf9c",
+          "length": 4,
+          "sha256": "8401d56d9bb30f96248c4f6c33639ffbd7ef1ed43b84a177e2e4969cc444ab16",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "service_sequence",
+      "target": "read_phase_counter",
+      "kind": "direct_call",
+      "site": "0x080129d4",
+      "condition": "Scheduler entry.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x080129d4",
+          "length": 4,
+          "sha256": "9e7a95286681eb60d0d97665914f6e683491c9998e910a19525c2109f630b02e",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "service_sequence",
+      "target": "step_divisor",
+      "kind": "direct_call",
+      "site": "0x080129e2",
+      "condition": "Current division lookup.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x080129e2",
+          "length": 4,
+          "sha256": "7d459849ac6f54863496d9087230fad8ed475c639fc35dec390636cde890211a",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "service_sequence",
+      "target": "rebuild_phrase",
+      "kind": "direct_call",
+      "site": "0x08012b62",
+      "condition": "Candidate matches rebuild target.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08012b62",
+          "length": 4,
+          "sha256": "e57aa1425e576bdcf0f3cef2213c0451338d956a9c74a533d5df1481c4d40c0c",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "service_sequence",
+      "target": "apply_pending_block",
+      "kind": "direct_call",
+      "site": "0x08012bd6",
+      "condition": "Candidate matches block target.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08012bd6",
+          "length": 4,
+          "sha256": "6d462a259aee34b675ef32dd2d1edfef72191d3d78e16ae1c4f75cea545d3e0d",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "service_sequence",
+      "target": "step_playback",
+      "kind": "direct_call",
+      "site": "0x08012ec0",
+      "condition": "Native emission guards passed; actual effective step in low byte of r1.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08012ec0",
+          "length": 4,
+          "sha256": "ed786a4b17941894b3aa6b1f3244c3fca888e24b3769e1e2d6d31494b27ad2db",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "service_sequence",
+      "target": "release_step",
+      "kind": "direct_call",
+      "site": "0x08012fcc",
+      "condition": "Phase reaches stored release deadline.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08012fcc",
+          "length": 4,
+          "sha256": "ea41377f2feeaec075b6815735cffd8445185df5e92d7b287101f2be9ca8d6e0",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "step_playback",
+      "target": "read_pitch",
+      "kind": "direct_call",
+      "site": "0x08013ec2",
+      "condition": "Read first voice marker.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08013ec2",
+          "length": 4,
+          "sha256": "462c09d1a345ac721524ac35f1d5c797cc64451a463c31ae5543f802ab263aa6",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "step_playback",
+      "target": "read_velocity",
+      "kind": "direct_call",
+      "site": "0x08013fde",
+      "condition": "Read voice velocity/flags.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08013fde",
+          "length": 4,
+          "sha256": "d02708d2b051b96d4b404775c89fc767a755d84337b7f8b4ce18b1d0ec5a8ef7",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "step_playback",
+      "target": "note_output",
+      "kind": "direct_call",
+      "site": "0x0801407c",
+      "condition": "New transformed Note On.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x0801407c",
+          "length": 4,
+          "sha256": "19ec024619ca074901452447e93f65993493095f0a93945c222618006609607a",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "step_playback",
+      "target": "note_output",
+      "kind": "direct_call",
+      "site": "0x08014118",
+      "condition": "Old retained pitch absent from new step: Note Off.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08014118",
+          "length": 4,
+          "sha256": "a166ac2ed94333aff1a73b51db1788d1819692ecee351b5cb60f829d496e5fc0",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "release_step",
+      "target": "note_output",
+      "kind": "direct_call",
+      "site": "0x0801421e",
+      "condition": "Saved active pitch released.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x0801421e",
+          "length": 4,
+          "sha256": "84d347af4bb331406b224deffe65e56ac56f67459841b2e5ce8620f2cc4d7254",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "step_playback",
+      "target": "retain_mode",
+      "kind": "direct_call",
+      "site": "0x08013ede",
+      "condition": "Choose retain source.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08013ede",
+          "length": 4,
+          "sha256": "0059522c9bc1d3668271b3e97c5f95bc1518e330997a924ec7e66c156639fa6c",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "release_step",
+      "target": "retain_mode",
+      "kind": "direct_call",
+      "site": "0x08014196",
+      "condition": "Choose which step supplies retain metadata.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08014196",
+          "length": 4,
+          "sha256": "c0126529f7ee6b7cfb97b8d3d11b792d3fd5842ba0986a01ea8b540f60bbd9ab",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "step_playback",
+      "target": "walk_note_index",
+      "kind": "direct_call",
+      "site": "0x08013f4e",
+      "condition": "UI byte +0x0f==0 and builder mode==5.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08013f4e",
+          "length": 4,
+          "sha256": "abd710c14f7a86ea8c2ff327d1f15789926f4e1ab58e86ba66dbde21bfcd0b32",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "builder_note_input",
+      "target": "note_pool_append",
+      "kind": "direct_call",
+      "site": "0x0801170c",
+      "condition": "Primary positive Note On.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x0801170c",
+          "length": 4,
+          "sha256": "e49396c6719c85bfbf0e928a74de83164114b461e263a3f90b9c392c7e4c39cc",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "builder_note_input",
+      "target": "note_pool_remove",
+      "kind": "direct_call",
+      "site": "0x0801175a",
+      "condition": "Immediate primary release.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x0801175a",
+          "length": 4,
+          "sha256": "446051b218667076c493959dadcd2267490a1338a6d7d0951ec00ea83639c220",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "builder_note_input",
+      "target": "note_pool_sort",
+      "kind": "direct_call",
+      "site": "0x08011716",
+      "condition": "Successful primary append.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08011716",
+          "length": 4,
+          "sha256": "1a63eb1ffab59c2147bf667bea39130c33e421ca7e1a000c3e46056d20fa8fd0",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "builder_note_input",
+      "target": "request_phrase_rebuild",
+      "kind": "direct_call",
+      "site": "0x0801171e",
+      "condition": "After accepted primary addition.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x0801171e",
+          "length": 4,
+          "sha256": "fe28fa2f979927259136f536df3583ab863cffb57f3902cb062fac5cc7dbf9fd",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "rebuild_phrase",
+      "target": "write_cell",
+      "kind": "direct_call",
+      "site": "0x08011aca",
+      "condition": "Mode 0 representative voice-0 write.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08011aca",
+          "length": 4,
+          "sha256": "9c53dbcf4e7eca629d2b9fd6d7db710a006e9f21d5e77edffeee079f2b2f62fc",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "rebuild_phrase",
+      "target": "random_note_index",
+      "kind": "direct_call",
+      "site": "0x08011c48",
+      "condition": "Mode 4.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08011c48",
+          "length": 4,
+          "sha256": "853e23622f71615730795cbd224ceb084a41b8a6b43a9a5403e56671bfc3aa31",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "rebuild_phrase",
+      "target": "generate_random_phrase",
+      "kind": "direct_call",
+      "site": "0x08011ccc",
+      "condition": "Mode 6.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x08011ccc",
+          "length": 4,
+          "sha256": "571268aac909f546705a7411b5861176086f12a5e7fa3fcc5f76d8f87b7ee66c",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "keyled_refresh",
+      "target": "keyled_dma_start",
+      "kind": "direct_call",
+      "site": "0x0800d218",
+      "condition": "Revision state requires submission.",
+      "status": "confirmed_static",
+      "evidence": [
+        {
+          "address": "0x0800d218",
+          "length": 4,
+          "sha256": "db34938c8bc3cd7088222a76d4b4b8de0757bb0e297bd5387c8fe2f500f8e271",
+          "claim": "Thumb BL target verified against the target node."
+        }
+      ]
+    },
+    {
+      "source": "app",
+      "target": "loop",
+      "kind": "contains",
+      "condition": "Main-loop code label inside application function.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "midi_object",
+      "target": "midi_vtable",
+      "kind": "data_reference",
+      "condition": "Object first word receives this vtable address during construction.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "midi_vtable",
+      "target": "midi_receive",
+      "kind": "function_pointer",
+      "condition": "First entry 0x08010255 is a Thumb function pointer, not an instruction address.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "usb_parser",
+      "target": "midi_receive",
+      "kind": "indirect_call",
+      "condition": "Self subscriber reached through the first virtual method; other subscribers are not exhaustively mapped.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "midi_receive",
+      "target": "input_source_prefilter_boundary",
+      "kind": "contains",
+      "condition": "Internal label before accepted-channel processing.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "input_pitch_tracker_update",
+      "target": "input_pitch_tracker",
+      "kind": "data_access",
+      "condition": "This instance is note object +4; other instances of the same helper exist.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "sequence_controller",
+      "target": "sequence_state",
+      "kind": "data_reference",
+      "condition": "Controller +0x4c contains state pointer.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "sequence_controller",
+      "target": "step_consumer",
+      "kind": "data_reference",
+      "condition": "Controller +0x50 contains consumer pointer.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "step_consumer",
+      "target": "sequence_state",
+      "kind": "data_reference",
+      "condition": "Consumer +0 is state pointer.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "sequence_state",
+      "target": "working_block",
+      "kind": "data_reference",
+      "condition": "Startup current pointer; later modes may select another block.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "sequence_state",
+      "target": "sequence_block",
+      "kind": "data_reference",
+      "condition": "Slot 0 is one possible selected block, not a permanent binding.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "select_block",
+      "target": "sequence_state",
+      "kind": "data_write",
+      "condition": "Current pointer store.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "set_pending_block",
+      "target": "sequence_state",
+      "kind": "data_write",
+      "condition": "Pending pointer store.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "apply_pending_block",
+      "target": "sequence_state",
+      "kind": "data_write",
+      "condition": "Pending to current pointer copy.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "service_sequence",
+      "target": "step_playback_call_boundary",
+      "kind": "contains",
+      "condition": "Actual BL site after effective-step calculation.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "release_step",
+      "target": "sequence_state",
+      "kind": "data_access",
+      "condition": "Retention reads the current block even if old Note On used a different block.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "phrase_builder",
+      "target": "primary_note_list",
+      "kind": "data_reference",
+      "condition": "Builder +8 is primary note pool.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "phrase_builder",
+      "target": "deferred_release_pool",
+      "kind": "data_reference",
+      "condition": "Builder +0x0c is deferred-release pool.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "rebuild_phrase",
+      "target": "sequence_state",
+      "kind": "data_write",
+      "condition": "Writes through current block in place; not an implicit staging buffer.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "sequence_absolute_phase_irq30",
+      "target": "sequence_absolute_phase_word",
+      "kind": "data_write",
+      "condition": "IRQ participates in absolute-phase update.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "service_sequence",
+      "target": "sequence_absolute_phase_word",
+      "kind": "data_access",
+      "condition": "Native Time Div reads can be separated by IRQ execution.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "external_transport_irq9",
+      "target": "button_dispatch",
+      "kind": "conditional_path",
+      "condition": "Guarded external transport action reaches the native router.",
+      "status": "confirmed_static"
+    },
+    {
+      "source": "keyled_writer",
+      "target": "keyled_refresh",
+      "kind": "shared_buffer",
+      "condition": "Writer and DMA submission use the same live waveform buffer; this is not a call edge.",
+      "status": "confirmed_static"
+    }
+  ],
+  "questions": [
+    {
+      "id": "timing",
+      "question": "Complete external-clock, resynchronization and swing semantics.",
+      "next": "Model native Time Div request/target lifetimes, effective-step correction and IRQ-separated phase reads before broadening a playback hook."
+    },
+    {
+      "id": "direction",
+      "question": "Native sequence backward or ping-pong traversal.",
+      "next": "Keep logical timing and physical storage indices separate; prove release look-ahead/ties and length-change behavior. See docs/sequencer.md."
+    },
+    {
+      "id": "arp-walk",
+      "question": "Mode 5 walk index after pool shrink.",
+      "next": "Trace all writers/resetters of builder+0x11; test stay/back/forward at N=0,1 and after removing the current last element."
+    },
+    {
+      "id": "ownership",
+      "question": "Complete aliases and asynchronous writers of playback and LED buffers.",
+      "next": "Extend the bounded caller/writer inventory through indirect calls, IRQ and mode changes before claiming exclusive ownership."
+    },
+    {
+      "id": "input",
+      "question": "Loss-aware accepted-note history across USB/DIN/scanner lifecycles.",
+      "next": "Track source/channel/pitch before merging and distinguish raw contacts from accepted note ownership; do not infer idle from selected=-1."
+    },
+    {
+      "id": "hardware",
+      "question": "Exact MCU, complete memory limits and maximum interrupt/stack usage.",
+      "next": "Establish hardware identity and measurable RAM/stack bounds. Reset SP and local successful probes do not establish free memory or universal recovery."
+    }
+  ]
+}
