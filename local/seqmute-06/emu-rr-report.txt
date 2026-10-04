@@ -1,0 +1,52 @@
+PASS round robin off: keyboard path identical to seqmute-03 (48 states x 6 events)
+PASS first key: pitch CC16/48, level 127 on osc 1, osc 2 muted, gate note on [(179, 16, 60), (179, 48, 0), (179, 69, 127), (179, 78, 0), (147, 60, 100)]
+PASS second key anywhere: osc 2 pitch CC17/49 + level 127, no new gate note [(179, 17, 67), (179, 49, 0), (179, 78, 127)]
+PASS third key steals the oldest oscillator (osc 1) [(179, 16, 72), (179, 48, 0), (179, 69, 127)]
+PASS releasing osc 2 key while others held: osc 2 muted, gate stays [(179, 78, 0)]
+PASS releasing a key that lost its oscillator does nothing but count
+PASS last key up closes the gate note [(131, 60, 64)]
+PASS pitch/clamp maths, scale index 0, offset index 0
+PASS pitch/clamp maths, scale index 0, offset index 1
+PASS pitch/clamp maths, scale index 0, offset index 2
+PASS pitch/clamp maths, scale index 0, offset index 3
+PASS pitch/clamp maths, scale index 0, offset index 4
+PASS pitch/clamp maths, scale index 1, offset index 0
+PASS pitch/clamp maths, scale index 1, offset index 1
+PASS pitch/clamp maths, scale index 1, offset index 2
+PASS pitch/clamp maths, scale index 1, offset index 3
+PASS pitch/clamp maths, scale index 1, offset index 4
+PASS pitch/clamp maths, scale index 2, offset index 0
+PASS pitch/clamp maths, scale index 2, offset index 1
+PASS pitch/clamp maths, scale index 2, offset index 2
+PASS pitch/clamp maths, scale index 2, offset index 3
+PASS pitch/clamp maths, scale index 2, offset index 4
+PASS pitch/clamp maths, scale index 3, offset index 0
+PASS pitch/clamp maths, scale index 3, offset index 1
+PASS pitch/clamp maths, scale index 3, offset index 2
+PASS pitch/clamp maths, scale index 3, offset index 3
+PASS pitch/clamp maths, scale index 3, offset index 4
+PASS 400 random key/Hold sessions (11762 key events) == reference model, message for message
+PASS MIDI-in notes bypass round robin [('OUT', 6572179)]
+PASS Shift+Hold on (boot byte 3): no MIDI, state cleared, shows ON, bit7 set, scale/offset bits kept ([], '0x83')
+PASS Shift+Hold off: tune 0 and level 127 restored on both oscillators, shows OFF [(179, 16, 64), (179, 48, 0), (179, 69, 127), (179, 17, 64), (179, 49, 0), (179, 78, 127)]
+PASS Shift+Hold off with the gate open: gate note off first, then restore [(131, 60, 64), (179, 16, 64), (179, 48, 0), (179, 69, 127), (179, 17, 64), (179, 49, 0), (179, 78, 127)]
+PASS knob 1 raw 0: scale index 0, other bits kept, name index 0 0x9c
+PASS knob 1 raw 85: scale index 0, other bits kept, name index 0 0x9c
+PASS knob 1 raw 86: scale index 1, other bits kept, name index 1 0x9d
+PASS knob 1 raw 170: scale index 1, other bits kept, name index 1 0x9d
+PASS knob 1 raw 171: scale index 2, other bits kept, name index 2 0x9e
+PASS knob 1 raw 255: scale index 2, other bits kept, name index 2 0x9e
+PASS knob 2 raw 0: offset index 0, other bits kept, name index 5 0x83
+PASS knob 2 raw 51: offset index 0, other bits kept, name index 5 0x83
+PASS knob 2 raw 52: offset index 1, other bits kept, name index 6 0x87
+PASS knob 2 raw 102: offset index 1, other bits kept, name index 6 0x87
+PASS knob 2 raw 103: offset index 2, other bits kept, name index 7 0x8b
+PASS knob 2 raw 153: offset index 2, other bits kept, name index 7 0x8b
+PASS knob 2 raw 154: offset index 3, other bits kept, name index 8 0x8f
+PASS knob 2 raw 204: offset index 3, other bits kept, name index 8 0x8f
+PASS knob 2 raw 205: offset index 4, other bits kept, name index 9 0x93
+PASS knob 2 raw 255: offset index 4, other bits kept, name index 9 0x93
+PASS knob 3 does nothing
+PASS knob 4 does nothing
+PASS display names ['128', '171', '341', 'OFF', 'ON ', '0  ', '-1 ', '+1 ', '-12', '+12']
+RESULT ALL PASS
