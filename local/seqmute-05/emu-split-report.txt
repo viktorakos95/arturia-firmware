@@ -1,0 +1,36 @@
+PASS split inactive (switched off at boot value, or MIDI in; any page): same as seqmute-03 (72 states x 6 events) mismatches=0
+PASS mode 1: below split plays normally [('out', 6563987, 1, 0)]
+PASS mode 1: at/above split sends CC17=note, no note, flags untouched ([('midi', 3281331, 0, 0)], [('midi', 4723123, 0, 0)])
+PASS mode 1: release of an upper key sends nothing
+PASS mode 1: lower key release is a normal Note Off [('out', 4204675, 1, 0)]
+PASS split stays on when the knob page is 1 (CC page / third page) ([('out', 6563987, 1, 0)], [('midi', 4723123, 0, 0)])
+PASS split stays on when the knob page is 2 (CC page / third page) ([('out', 6563987, 1, 0)], [('midi', 4723123, 0, 0)])
+PASS mode 2: below split sends CC16=note only; above plays normally ([('midi', 2625715, 0, 0)], [('out', 6569107, 1, 0)], [], [('out', 4209795, 1, 0)])
+PASS ALL, nothing held below: upper key sends CC17 and also plays ([('midi', 3936691, 0, 0), ('out', 6569107, 1, 0)], [('out', 4209795, 1, 0)])
+PASS ALL, lower key held: upper key sends CC17 only (no second note) ([('out', 6563987, 1, 0)], [('midi', 3936691, 0, 0)], [], [('out', 4204675, 1, 0)])
+PASS split byte 0 means 60 ([('out', 6568851, 1, 0)], [('midi', 3936691, 0, 0)])
+PASS MIDI-in note above the split is untouched [('out', 6572179, 2, 0)]
+PASS Hold on: lower note sustained as before, upper key still just a CC ([('out', 6563987, 1, 0)], [], [('midi', 4723123, 0, 0)], [])
+PASS knob 1 raw 0 -> split 24, display called once with formatter+value, on/off bit untouched (24, [('show', 536875392, 134345409, 0, 24)])
+PASS knob 1 raw 3 -> split 24, display called once with formatter+value, on/off bit untouched (24, [('show', 536875392, 134345409, 0, 24)])
+PASS knob 1 raw 4 -> split 25, display called once with formatter+value, on/off bit untouched (25, [('show', 536875392, 134345409, 0, 25)])
+PASS knob 1 raw 128 -> split 66, display called once with formatter+value, on/off bit untouched (66, [('show', 536875392, 134345409, 0, 66)])
+PASS knob 1 raw 255 -> split 108, display called once with formatter+value, on/off bit untouched (108, [('show', 536875392, 134345409, 0, 108)])
+PASS knob 2 raw 0 -> mode 0 (stored 0), displayed value 0 [('show', 536875392, 134345469, 0, 0)]
+PASS knob 2 raw 85 -> mode 0 (stored 0), displayed value 0 [('show', 536875392, 134345469, 0, 0)]
+PASS knob 2 raw 86 -> mode 1 (stored 1), displayed value 1 [('show', 536875392, 134345469, 0, 1)]
+PASS knob 2 raw 170 -> mode 1 (stored 1), displayed value 1 [('show', 536875392, 134345469, 0, 1)]
+PASS knob 2 raw 171 -> mode 2 (stored 2), displayed value 2 [('show', 536875392, 134345469, 0, 2)]
+PASS knob 2 raw 255 -> mode 2 (stored 2), displayed value 2 [('show', 536875392, 134345469, 0, 2)]
+PASS knob 1 keeps mode and on bit
+PASS knob 2 keeps the on bit
+PASS knob 2 does not turn the split on
+PASS knob 3 on the chord page does nothing
+PASS knob 4 on the chord page does nothing
+PASS Shift+Hold: byte 0x03 -> 0x83, shows value 4 (3 OFF / 4 ON) (131, [('show', 536875392, 134345469, 0, 4)])
+PASS Shift+Hold: byte 0x83 -> 0x03, shows value 3 (3 OFF / 4 ON) (3, [('show', 536875392, 134345469, 0, 3)])
+PASS Shift+Hold: byte 0x00 -> 0x80, shows value 4 (3 OFF / 4 ON) (128, [('show', 536875392, 134345469, 0, 4)])
+PASS Shift+Hold: byte 0x82 -> 0x02, shows value 3 (3 OFF / 4 ON) (2, [('show', 536875392, 134345469, 0, 3)])
+PASS note names (middle C = C3) ['C 0', 'Db0', 'D 0', 'C 1', 'D 2', 'C 3', 'Db3', 'Bb3', 'B 3', 'C 7']
+PASS mode names ['1  ', '2  ', 'ALL', 'OFF', 'ON ']
+RESULT ALL PASS

@@ -1,0 +1,29 @@
+PASS plain Chord release (no capture) == stock Shift+Chord release [CC bank path] (32 states) mismatches=0
+PASS Shift+Chord release on chord/CC page == stock plain Chord release [page toggle] (16 states) mismatches=0
+PASS Shift+Chord release on page 2: no page/bank change, timer cleared (48 states) mismatches=0
+PASS plain Chord release after hold+notes (capture) == stock: finalize, no bank change (48 states) mismatches=0
+PASS plain release, capture state without notes: finalize runs, then bank path with intact pointer ['chord_finalize', 'set_page', 'led', 'display']
+PASS plain release on CC page: bank 4 wraps to bank 1
+PASS plain release on chord page: goes to CC page, bank kept
+PASS Shift release on CC page: goes to chord page, bank kept
+PASS Shift release on chord page: goes to CC page, bank kept
+EXC 0 1 1 0 0 0 
+EXC 0 1 1 0 0 1 
+EXC 0 1 1 0 1 0 
+EXC 0 1 1 0 1 1 
+EXC 0 1 1 0 2 0 
+EXC 0 1 1 0 2 1 
+EXC 0 1 1 1 0 0 
+EXC 0 1 1 1 0 1 
+EXC 0 1 1 1 1 0 
+EXC 0 1 1 1 1 1 
+EXC 0 1 1 1 2 0 
+EXC 0 1 1 1 2 1 
+EXC 0 1 1 2 0 0 
+EXC 0 1 1 2 0 1 
+EXC 0 1 1 2 1 0 
+EXC 0 1 1 2 1 1 
+EXC 0 1 1 2 2 0 
+EXC 0 1 1 2 2 1 
+FAIL all other button events (ids 0-9, press/release, incl. Chord press) identical to stock (684 states) mismatches=36
+RESULT FAILURES

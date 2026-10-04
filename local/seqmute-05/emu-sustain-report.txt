@@ -1,0 +1,27 @@
+PASS Hold off: keyboard path identical to seqmute-02 (144 states x 6 events, calls + note-object RAM) mismatches=0
+PASS SEQ stopped, Hold on: Note On sent, Note Off withheld ([('out', 6569107, 1, 0), ('out', 6569104, 1, 1)], [('out', 4209792, 1, 1)])
+PASS SEQ stopped: Hold off releases exactly the withheld notes, not the key still down [('out', 4209795, 1, 0), ('out', 4211587, 1, 0)]
+PASS SEQ stopped: key still down releases normally afterwards [('out', 4210819, 1, 0), ('out', 4210816, 1, 1)]
+PASS SEQ stopped: second Hold off sends nothing
+PASS SEQ playing, Hold on: Note On sent, Note Off withheld ([('out', 6569107, 1, 0)], [])
+PASS SEQ playing: Hold off releases exactly the withheld notes, not the key still down [('out', 4209795, 1, 0), ('out', 4211587, 1, 0)]
+PASS SEQ playing: key still down releases normally afterwards [('out', 4210819, 1, 0)]
+PASS SEQ playing: second Hold off sends nothing
+PASS ARP stopped, Hold on: Note On sent, Note Off withheld ([('out', 6569107, 1, 0), ('out', 6569104, 1, 1)], [('out', 4209792, 1, 1)])
+PASS ARP stopped: Hold off releases exactly the withheld notes, not the key still down [('out', 4209795, 1, 0), ('out', 4211587, 1, 0)]
+PASS ARP stopped: key still down releases normally afterwards [('out', 4210819, 1, 0), ('out', 4210816, 1, 1)]
+PASS ARP stopped: second Hold off sends nothing
+PASS Hold on: re-pressing a sustained key sends its Note Off, then a new Note On [('out', 4209795, 1, 0), ('out', 6569107, 1, 0)]
+PASS ARP playing, Hold on: identical to stock (keys feed the arp, nothing withheld)
+PASS Hold on: notes arriving on MIDI in are released normally [('out', 4209795, 2, 0), ('out', 4209792, 2, 1)]
+PASS alternate-channel keyboard mode: withheld, then released on that channel/route ([('out', 4209792, 1, 1)], [('out', 4209801, 1, 2)])
+PASS pedal off: no release while Hold stays on; release when stock clears Hold
+PASS Hold button toggle on/off/on, mode setting 0, nothing pending: identical to stock
+PASS Hold button, mode 0: toggle-off releases the withheld note only; LED/CC64/arp-latch calls as stock [(4209795, 1, 0)]
+PASS Hold button toggle on/off/on, mode setting 1, nothing pending: identical to stock
+PASS Hold button, mode 1: toggle-off releases the withheld note only; LED/CC64/arp-latch calls as stock [(4209795, 1, 0)]
+PASS Hold button toggle on/off/on, mode setting 2, nothing pending: identical to stock
+PASS Hold button, mode 2: toggle-off releases the withheld note only; LED/CC64/arp-latch calls as stock [(4209795, 1, 0)]
+PASS Hold button toggle on/off/on, mode setting 3, nothing pending: identical to stock
+PASS Hold button, mode 3: toggle-off releases the withheld note only; LED/CC64/arp-latch calls as stock [(4209795, 1, 0)]
+RESULT ALL PASS
