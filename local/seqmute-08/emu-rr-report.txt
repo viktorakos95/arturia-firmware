@@ -1,0 +1,128 @@
+PASS round robin off: keyboard path identical to seqmute-03 (36 states x 6 events)
+PASS first key: osc 1 pitch CC16/48 + level 127, osc 2 muted, gate note on [(179, 16, 60), (179, 48, 0), (179, 69, 127), (179, 78, 0), (147, 60, 100)]
+PASS second key: retrigger (Note Off of the previous gate note, then Note On), osc 2 pitch CC17/49 + level 127 [(131, 60, 64), (179, 17, 67), (179, 49, 0), (179, 78, 127), (147, 67, 90)]
+PASS third key takes the NEWEST oscillator (osc 2), retriggers; the oldest held key (osc 1) is not touched [(131, 67, 64), (179, 17, 72), (179, 49, 0), (179, 78, 127), (147, 72, 80)]
+PASS releasing the key that lost its oscillator does nothing
+PASS releasing the osc 2 key while osc 1 is held: osc 2 muted, gate stays [(179, 78, 0)]
+PASS last key up closes the gate note (the newest key's) [(131, 72, 64)]
+PASS drone key held on osc 1: every melody key uses osc 2 and never touches osc 1
+PASS pitch maths and clamp: scale byte 0, offset byte 0, fine byte 0
+PASS pitch maths and clamp: scale byte 0, offset byte 0, fine byte 1
+PASS pitch maths and clamp: scale byte 0, offset byte 0, fine byte 128
+PASS pitch maths and clamp: scale byte 0, offset byte 0, fine byte 255
+PASS pitch maths and clamp: scale byte 0, offset byte 1, fine byte 0
+PASS pitch maths and clamp: scale byte 0, offset byte 1, fine byte 1
+PASS pitch maths and clamp: scale byte 0, offset byte 1, fine byte 128
+PASS pitch maths and clamp: scale byte 0, offset byte 1, fine byte 255
+PASS pitch maths and clamp: scale byte 0, offset byte 128, fine byte 0
+PASS pitch maths and clamp: scale byte 0, offset byte 128, fine byte 1
+PASS pitch maths and clamp: scale byte 0, offset byte 128, fine byte 128
+PASS pitch maths and clamp: scale byte 0, offset byte 128, fine byte 255
+PASS pitch maths and clamp: scale byte 0, offset byte 255, fine byte 0
+PASS pitch maths and clamp: scale byte 0, offset byte 255, fine byte 1
+PASS pitch maths and clamp: scale byte 0, offset byte 255, fine byte 128
+PASS pitch maths and clamp: scale byte 0, offset byte 255, fine byte 255
+PASS pitch maths and clamp: scale byte 1, offset byte 0, fine byte 0
+PASS pitch maths and clamp: scale byte 1, offset byte 0, fine byte 1
+PASS pitch maths and clamp: scale byte 1, offset byte 0, fine byte 128
+PASS pitch maths and clamp: scale byte 1, offset byte 0, fine byte 255
+PASS pitch maths and clamp: scale byte 1, offset byte 1, fine byte 0
+PASS pitch maths and clamp: scale byte 1, offset byte 1, fine byte 1
+PASS pitch maths and clamp: scale byte 1, offset byte 1, fine byte 128
+PASS pitch maths and clamp: scale byte 1, offset byte 1, fine byte 255
+PASS pitch maths and clamp: scale byte 1, offset byte 128, fine byte 0
+PASS pitch maths and clamp: scale byte 1, offset byte 128, fine byte 1
+PASS pitch maths and clamp: scale byte 1, offset byte 128, fine byte 128
+PASS pitch maths and clamp: scale byte 1, offset byte 128, fine byte 255
+PASS pitch maths and clamp: scale byte 1, offset byte 255, fine byte 0
+PASS pitch maths and clamp: scale byte 1, offset byte 255, fine byte 1
+PASS pitch maths and clamp: scale byte 1, offset byte 255, fine byte 128
+PASS pitch maths and clamp: scale byte 1, offset byte 255, fine byte 255
+PASS pitch maths and clamp: scale byte 28, offset byte 0, fine byte 0
+PASS pitch maths and clamp: scale byte 28, offset byte 0, fine byte 1
+PASS pitch maths and clamp: scale byte 28, offset byte 0, fine byte 128
+PASS pitch maths and clamp: scale byte 28, offset byte 0, fine byte 255
+PASS pitch maths and clamp: scale byte 28, offset byte 1, fine byte 0
+PASS pitch maths and clamp: scale byte 28, offset byte 1, fine byte 1
+PASS pitch maths and clamp: scale byte 28, offset byte 1, fine byte 128
+PASS pitch maths and clamp: scale byte 28, offset byte 1, fine byte 255
+PASS pitch maths and clamp: scale byte 28, offset byte 128, fine byte 0
+PASS pitch maths and clamp: scale byte 28, offset byte 128, fine byte 1
+PASS pitch maths and clamp: scale byte 28, offset byte 128, fine byte 128
+PASS pitch maths and clamp: scale byte 28, offset byte 128, fine byte 255
+PASS pitch maths and clamp: scale byte 28, offset byte 255, fine byte 0
+PASS pitch maths and clamp: scale byte 28, offset byte 255, fine byte 1
+PASS pitch maths and clamp: scale byte 28, offset byte 255, fine byte 128
+PASS pitch maths and clamp: scale byte 28, offset byte 255, fine byte 255
+PASS pitch maths and clamp: scale byte 29, offset byte 0, fine byte 0
+PASS pitch maths and clamp: scale byte 29, offset byte 0, fine byte 1
+PASS pitch maths and clamp: scale byte 29, offset byte 0, fine byte 128
+PASS pitch maths and clamp: scale byte 29, offset byte 0, fine byte 255
+PASS pitch maths and clamp: scale byte 29, offset byte 1, fine byte 0
+PASS pitch maths and clamp: scale byte 29, offset byte 1, fine byte 1
+PASS pitch maths and clamp: scale byte 29, offset byte 1, fine byte 128
+PASS pitch maths and clamp: scale byte 29, offset byte 1, fine byte 255
+PASS pitch maths and clamp: scale byte 29, offset byte 128, fine byte 0
+PASS pitch maths and clamp: scale byte 29, offset byte 128, fine byte 1
+PASS pitch maths and clamp: scale byte 29, offset byte 128, fine byte 128
+PASS pitch maths and clamp: scale byte 29, offset byte 128, fine byte 255
+PASS pitch maths and clamp: scale byte 29, offset byte 255, fine byte 0
+PASS pitch maths and clamp: scale byte 29, offset byte 255, fine byte 1
+PASS pitch maths and clamp: scale byte 29, offset byte 255, fine byte 128
+PASS pitch maths and clamp: scale byte 29, offset byte 255, fine byte 255
+PASS pitch maths and clamp: scale byte 255, offset byte 0, fine byte 0
+PASS pitch maths and clamp: scale byte 255, offset byte 0, fine byte 1
+PASS pitch maths and clamp: scale byte 255, offset byte 0, fine byte 128
+PASS pitch maths and clamp: scale byte 255, offset byte 0, fine byte 255
+PASS pitch maths and clamp: scale byte 255, offset byte 1, fine byte 0
+PASS pitch maths and clamp: scale byte 255, offset byte 1, fine byte 1
+PASS pitch maths and clamp: scale byte 255, offset byte 1, fine byte 128
+PASS pitch maths and clamp: scale byte 255, offset byte 1, fine byte 255
+PASS pitch maths and clamp: scale byte 255, offset byte 128, fine byte 0
+PASS pitch maths and clamp: scale byte 255, offset byte 128, fine byte 1
+PASS pitch maths and clamp: scale byte 255, offset byte 128, fine byte 128
+PASS pitch maths and clamp: scale byte 255, offset byte 128, fine byte 255
+PASS pitch maths and clamp: scale byte 255, offset byte 255, fine byte 0
+PASS pitch maths and clamp: scale byte 255, offset byte 255, fine byte 1
+PASS pitch maths and clamp: scale byte 255, offset byte 255, fine byte 128
+PASS pitch maths and clamp: scale byte 255, offset byte 255, fine byte 255
+PASS 500 random key/Hold sessions (14245 key events) == reference model, message for message
+PASS MIDI-in notes bypass round robin [('OUT', 6572179)]
+PASS Shift+Hold on: no MIDI, state cleared, shows ON, tuning bytes kept ([], '0x83')
+PASS Shift+Hold off: tune 0 and level 127 restored on both oscillators, shows OFF [(179, 16, 64), (179, 48, 0), (179, 69, 127), (179, 17, 64), (179, 49, 0), (179, 78, 127)]
+PASS Shift+Hold off with the gate open: gate note off first, then restore [(131, 60, 64), (179, 16, 64), (179, 48, 0), (179, 69, 127), (179, 17, 64), (179, 49, 0), (179, 78, 127)]
+PASS knob 1 raw 0: scale byte 1, shows 100 units (value 0), formatter odd (1, [('show', 536875392, 134239455, 0, 0)])
+PASS knob 2 raw 0: offset byte 1, shows -12 semitones (1, [('show', 536875392, 134239473, 0, 116)])
+PASS knob 3 raw 0: fine byte 1, shows -99 units (1, [('show', 536875392, 134239473, 0, 29)])
+PASS knob 1 raw 1: scale byte 1, shows 100 units (value 0), formatter odd (1, [('show', 536875392, 134239455, 0, 0)])
+PASS knob 2 raw 1: offset byte 1, shows -12 semitones (1, [('show', 536875392, 134239473, 0, 116)])
+PASS knob 3 raw 1: fine byte 1, shows -99 units (1, [('show', 536875392, 134239473, 0, 29)])
+PASS knob 1 raw 2: scale byte 2, shows 101 units (value 1), formatter odd (2, [('show', 536875392, 134239455, 0, 1)])
+PASS knob 2 raw 2: offset byte 2, shows -12 semitones (2, [('show', 536875392, 134239473, 0, 116)])
+PASS knob 3 raw 2: fine byte 2, shows -98 units (2, [('show', 536875392, 134239473, 0, 30)])
+PASS knob 1 raw 100: scale byte 100, shows 199 units (value 99), formatter odd (100, [('show', 536875392, 134239455, 0, 99)])
+PASS knob 2 raw 100: offset byte 100, shows -3 semitones (100, [('show', 536875392, 134239473, 0, 125)])
+PASS knob 3 raw 100: fine byte 100, shows -22 units (100, [('show', 536875392, 134239473, 0, 106)])
+PASS knob 1 raw 127: scale byte 127, shows 226 units (value 126), formatter odd (127, [('show', 536875392, 134239455, 0, 126)])
+PASS knob 2 raw 127: offset byte 127, shows +0 semitones (127, [('show', 536875392, 134239473, 0, 128)])
+PASS knob 3 raw 127: fine byte 127, shows -1 units (127, [('show', 536875392, 134239473, 0, 127)])
+PASS knob 1 raw 128: scale byte 128, shows 227 units (value 127), formatter odd (128, [('show', 536875392, 134239455, 0, 127)])
+PASS knob 2 raw 128: offset byte 128, shows +0 semitones (128, [('show', 536875392, 134239473, 0, 128)])
+PASS knob 3 raw 128: fine byte 128, shows +0 units (128, [('show', 536875392, 134239473, 0, 128)])
+PASS knob 1 raw 129: scale byte 129, shows 228 units (value 128), formatter odd (129, [('show', 536875392, 134239455, 0, 128)])
+PASS knob 2 raw 129: offset byte 129, shows +0 semitones (129, [('show', 536875392, 134239473, 0, 128)])
+PASS knob 3 raw 129: fine byte 129, shows +1 units (129, [('show', 536875392, 134239473, 0, 129)])
+PASS knob 1 raw 200: scale byte 200, shows 299 units (value 199), formatter odd (200, [('show', 536875392, 134239455, 0, 199)])
+PASS knob 2 raw 200: offset byte 200, shows +7 semitones (200, [('show', 536875392, 134239473, 0, 135)])
+PASS knob 3 raw 200: fine byte 200, shows +56 units (200, [('show', 536875392, 134239473, 0, 184)])
+PASS knob 1 raw 254: scale byte 254, shows 353 units (value 253), formatter odd (254, [('show', 536875392, 134239455, 0, 253)])
+PASS knob 2 raw 254: offset byte 254, shows +12 semitones (254, [('show', 536875392, 134239473, 0, 140)])
+PASS knob 3 raw 254: fine byte 254, shows +98 units (254, [('show', 536875392, 134239473, 0, 226)])
+PASS knob 1 raw 255: scale byte 255, shows 354 units (value 254), formatter odd (255, [('show', 536875392, 134239455, 0, 254)])
+PASS knob 2 raw 255: offset byte 255, shows +12 semitones (255, [('show', 536875392, 134239473, 0, 140)])
+PASS knob 3 raw 255: fine byte 255, shows +99 units (255, [('show', 536875392, 134239473, 0, 227)])
+PASS knob 4 does nothing
+PASS scale display (value + 100)
+PASS signed display (value - 128) ['-99', '-12', '-01', '+00', '+01', '+12', '+99']
+PASS ON/OFF names
+RESULT ALL PASS
