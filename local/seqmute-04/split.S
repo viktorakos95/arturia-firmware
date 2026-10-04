@@ -1,5 +1,5 @@
-/* KeyStep 37 (original) 1.1.6.579 — Hold button as internal note sustain.
- * Assembled as one section whose offset 0 is flash 0x08014000, so every branch
+/* KeyStep 37 (original) 1.1.6.579 — paraphonic keyboard split on the chord knob page (on top of seqmute-03).
+ * Assembled as one section whose offset 0 is flash 0x08004000, so every branch
  * between stock labels, hook sites and the added code is resolved by the assembler.
  * Only the hook-site windows and the added block are copied into the image. */
         .syntax unified
@@ -17,13 +17,13 @@
         .endm
 
 /* ---- stock entry points (labels only, no bytes emitted) and hook sites ---- */
-        STOCK stock_knob_exit, 0x08004986       /* epilogue of the knob control function */
         AT 0x0800496c                           /* chord-page knob jump table (tbh, base = this address) */
 site_knob_table:
         .short (knob_split - site_knob_table) / 2
         .short (knob_mode - site_knob_table) / 2
         .short (stock_knob_exit - site_knob_table) / 2      /* knobs 3 and 4: no action on the split page */
         .short (stock_knob_exit - site_knob_table) / 2
+        STOCK stock_knob_exit, 0x08004986       /* epilogue of the knob control function */
         STOCK stock_hold_clear, 0x080149aa      /* (HO, mode): clears HO+6/HO+5 when mode bit0 */
         AT 0x08014a2c
 site_pedal_off:      bl hold_off_pedal          /* was: bl stock_hold_clear */
@@ -104,9 +104,10 @@ hook_note_entry:        /* r0 = r6 = note object, caller [sp,#4] = message; must
         b.w     stock_note_exit
 
 /* Paraphonic split, active on the chord knob page (U+0x15 == 0), physical keys only.
- * split = chord object +0x48 (0 -> 60), mode = chord object +9 (0 "1", 1 "2", 2 "ALL").
- * mode 0: keys >= split send CC 17 only.          mode 1: keys < split send CC 16 only.
- * mode 2: keys >= split send CC 17, and also play as a note when no lower-side note is held. */
+ * split = chord object +0x48 (0 -> 60); mode byte = chord object +9: 0 = not armed (power-up, split off),
+ * otherwise 1 "1", 2 "2", 3 "ALL". Turning knob 1 or 2 on the chord page arms it.
+ * "1": keys >= split send CC 17 only.          "2": keys < split send CC 16 only.
+ * "ALL": keys >= split send CC 17, and also play as a note when no lower-side note is held. */
         .thumb_func
 split_check:
         push    {r5, lr}
@@ -117,11 +118,13 @@ split_check:
         ldrb    r2, [r3, #0x15]
         cbnz    r2, 20f
         ldr     r3, =0x20001e04
+        ldrb    r5, [r3, #9]
+        cbz     r5, 20f                         /* not armed */
+        subs    r5, #1
         ldrb.w  r2, [r3, #0x48]
         cbnz    r2, 11f
         movs    r2, #60
-11:     ldrb    r5, [r3, #9]
-        cmp     r5, #2
+11:     cmp     r5, #2
         it      hi
         movhi   r5, #0
         cmp     r4, r2
@@ -174,15 +177,21 @@ knob_split:
         adds    r3, #24                         /* 24..108 */
         ldr     r2, =0x20001e04
         strb.w  r3, [r2, #0x48]
-        adr     r1, fmt_note
+        ldrb    r1, [r2, #9]
+        cbnz    r1, 16f
+        movs    r1, #1                          /* arm, mode "1" */
+        strb    r1, [r2, #9]
+16:     adr     r1, fmt_note
         b       15f
         .thumb_func
 knob_mode:
         ldrb.w  r3, [r4, #0x59]
         add.w   r3, r3, r3, lsl #1
         lsrs    r3, r3, #8                      /* 0..2 */
+        adds    r3, #1                          /* stored as 1..3, 0 = not armed */
         ldr     r2, =0x20001e04
         strb    r3, [r2, #9]
+        subs    r3, #1                          /* displayed value 0..2 */
         adr     r1, fmt_mode
 15:     adds    r1, #1                          /* Thumb function pointer */
         movs    r2, #0
