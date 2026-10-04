@@ -1,7 +1,7 @@
 # seqmute-06 = seqmute-03 + round-robin oscillator allocation (original KeyStep 37, 1.1.6.579)
 
 Candidate: `keystep37_Firmware_Update_1_1_6_579_seqmute06.led`
-SHA-256 `37183c69a76ed09bedd0dbbafaf9ad2cac02cc6322f6fb552be6eecb99e4de2a` (see `sha256sum`; rebuilt after the last source edit)
+SHA-256 `a42831278c283e5e1946ef6ef4aaa81b89f6bbff0169ba730e315cf7de9d683b`
 `ks37 verify --stock --plan`: 176/176 record sums, application residue 0. **Emulator-checked only.**
 Build: `clang --target=thumbv7m-none-eabi -c rr.S`, `ld.lld -Ttext=0x08004000 --no-rosegment -e 0`, `llvm-objcopy -O binary`, then
 `build_plan.py` (reads `/tmp/s06.elf`) and `ks37 patch`. Replaces seqmute-05 (split), which was never flashed.
