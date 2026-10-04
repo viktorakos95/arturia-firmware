@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "source_sha256": "464e2ca2fc5318e6026f15cf3c3a61f6417a80171260543a18e87df116319a8a",
+  "edits": [
+    {"flash_address": "0x08013eb8", "expected": "002b40d0", "replacement": "53b940e0"},
+    {"flash_address": "0x08013ece", "expected": "9a4b1b68db7b002b3ed1", "replacement": "03e0204600f0c1f92fe0"},
+    {"flash_address": "0x0801b8d6", "expected": "ba45", "replacement": "28e0"},
+    {"flash_address": "0x0801be40", "expected": "ba45", "replacement": "f6e7"}
+  ]
+}

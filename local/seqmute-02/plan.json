@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "source_sha256": "464e2ca2fc5318e6026f15cf3c3a61f6417a80171260543a18e87df116319a8a",
+  "edits": [
+    {"flash_address": "0x08013eb8", "expected": "002b40d0", "replacement": "53b940e0"},
+    {"flash_address": "0x08013ece", "expected": "9a4b1b68db7b002b3ed1", "replacement": "03e0204600f0c1f92fe0"},
+    {"flash_address": "0x0801b8d6", "expected": "ba45", "replacement": "28e0"},
+    {"flash_address": "0x0801be40", "expected": "ba45", "replacement": "f6e7"},
+    {"flash_address": "0x08017d9c", "expected": "464b1b7833b3", "replacement": "28e0204600bf"},
+    {"flash_address": "0x08017df0", "expected": "354b1d78037b022b21d0002d7ff487ae637d022b1ed0012b37d0002be4d1", "replacement": "314b1b783bb9344b1d78037b022b1ed0002dccd083e6637d012b36d0e4d8"},
+    {"flash_address": "0x08017e42", "expected": "dae7", "replacement": "dde7"}
+  ]
+}

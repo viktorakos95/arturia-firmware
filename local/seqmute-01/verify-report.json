@@ -1,0 +1,144 @@
+{
+  "profile": "1.1.6.579-declarative-patch",
+  "source_sha256": "464e2ca2fc5318e6026f15cf3c3a61f6417a80171260543a18e87df116319a8a",
+  "sha256": "5086cd506cade413adaf543d991ab2d1452077bd41efefb1964ceb42ff5ff7de",
+  "bytes": 234280,
+  "records": 176,
+  "local_checksums_valid": 176,
+  "application_sum": {
+    "address_fields": "[0x004000,0x02fffe)",
+    "gap_fill": "ff",
+    "stored_le16": "0xc1b3",
+    "body_sum": "0x3e4d",
+    "residue": 0
+  },
+  "plan_edits": 4,
+  "decoded_diff": [
+    {
+      "offset": 67116,
+      "before": "00",
+      "after": "53"
+    },
+    {
+      "offset": 67117,
+      "before": "2b",
+      "after": "b9"
+    },
+    {
+      "offset": 67119,
+      "before": "d0",
+      "after": "e0"
+    },
+    {
+      "offset": 67138,
+      "before": "9a",
+      "after": "03"
+    },
+    {
+      "offset": 67139,
+      "before": "4b",
+      "after": "e0"
+    },
+    {
+      "offset": 67140,
+      "before": "1b",
+      "after": "20"
+    },
+    {
+      "offset": 67141,
+      "before": "68",
+      "after": "46"
+    },
+    {
+      "offset": 67142,
+      "before": "db",
+      "after": "00"
+    },
+    {
+      "offset": 67143,
+      "before": "7b",
+      "after": "f0"
+    },
+    {
+      "offset": 67144,
+      "before": "00",
+      "after": "c1"
+    },
+    {
+      "offset": 67145,
+      "before": "2b",
+      "after": "f9"
+    },
+    {
+      "offset": 67146,
+      "before": "3e",
+      "after": "2f"
+    },
+    {
+      "offset": 67147,
+      "before": "d1",
+      "after": "e0"
+    },
+    {
+      "offset": 67454,
+      "before": "29",
+      "after": "2e"
+    },
+    {
+      "offset": 67455,
+      "before": "51",
+      "after": "4f"
+    },
+    {
+      "offset": 99308,
+      "before": "ba",
+      "after": "28"
+    },
+    {
+      "offset": 99309,
+      "before": "45",
+      "after": "e0"
+    },
+    {
+      "offset": 100128,
+      "before": "d4",
+      "after": "cb"
+    },
+    {
+      "offset": 100724,
+      "before": "ba",
+      "after": "f6"
+    },
+    {
+      "offset": 100725,
+      "before": "45",
+      "after": "e7"
+    },
+    {
+      "offset": 101182,
+      "before": "23",
+      "after": "45"
+    },
+    {
+      "offset": 101183,
+      "before": "39",
+      "after": "38"
+    },
+    {
+      "offset": 117114,
+      "before": "95",
+      "after": "b3"
+    },
+    {
+      "offset": 117115,
+      "before": "c4",
+      "after": "c1"
+    },
+    {
+      "offset": 117138,
+      "before": "65",
+      "after": "4a"
+    }
+  ],
+  "device_access": false
+}

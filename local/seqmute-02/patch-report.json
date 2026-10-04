@@ -1,0 +1,326 @@
+{
+  "profile": "1.1.6.579-declarative-patch",
+  "source_sha256": "464e2ca2fc5318e6026f15cf3c3a61f6417a80171260543a18e87df116319a8a",
+  "sha256": "bb526ad9c056497a2ba5fe9afb1591e4f0b3f86fc2348cc086c486bade6f11fc",
+  "bytes": 234280,
+  "records": 176,
+  "local_checksums_valid": 176,
+  "application_sum": {
+    "address_fields": "[0x004000,0x02fffe)",
+    "gap_fill": "ff",
+    "stored_le16": "0xc071",
+    "body_sum": "0x3f8f",
+    "residue": 0
+  },
+  "plan_edits": 7,
+  "decoded_diff": [
+    {
+      "offset": 67116,
+      "before": "00",
+      "after": "53"
+    },
+    {
+      "offset": 67117,
+      "before": "2b",
+      "after": "b9"
+    },
+    {
+      "offset": 67119,
+      "before": "d0",
+      "after": "e0"
+    },
+    {
+      "offset": 67138,
+      "before": "9a",
+      "after": "03"
+    },
+    {
+      "offset": 67139,
+      "before": "4b",
+      "after": "e0"
+    },
+    {
+      "offset": 67140,
+      "before": "1b",
+      "after": "20"
+    },
+    {
+      "offset": 67141,
+      "before": "68",
+      "after": "46"
+    },
+    {
+      "offset": 67142,
+      "before": "db",
+      "after": "00"
+    },
+    {
+      "offset": 67143,
+      "before": "7b",
+      "after": "f0"
+    },
+    {
+      "offset": 67144,
+      "before": "00",
+      "after": "c1"
+    },
+    {
+      "offset": 67145,
+      "before": "2b",
+      "after": "f9"
+    },
+    {
+      "offset": 67146,
+      "before": "3e",
+      "after": "2f"
+    },
+    {
+      "offset": 67147,
+      "before": "d1",
+      "after": "e0"
+    },
+    {
+      "offset": 67454,
+      "before": "29",
+      "after": "2e"
+    },
+    {
+      "offset": 67455,
+      "before": "51",
+      "after": "4f"
+    },
+    {
+      "offset": 83696,
+      "before": "46",
+      "after": "28"
+    },
+    {
+      "offset": 83697,
+      "before": "4b",
+      "after": "e0"
+    },
+    {
+      "offset": 83698,
+      "before": "1b",
+      "after": "20"
+    },
+    {
+      "offset": 83699,
+      "before": "78",
+      "after": "46"
+    },
+    {
+      "offset": 83700,
+      "before": "33",
+      "after": "00"
+    },
+    {
+      "offset": 83701,
+      "before": "b3",
+      "after": "bf"
+    },
+    {
+      "offset": 83780,
+      "before": "35",
+      "after": "31"
+    },
+    {
+      "offset": 83782,
+      "before": "1d",
+      "after": "1b"
+    },
+    {
+      "offset": 83784,
+      "before": "03",
+      "after": "3b"
+    },
+    {
+      "offset": 83785,
+      "before": "7b",
+      "after": "b9"
+    },
+    {
+      "offset": 83786,
+      "before": "02",
+      "after": "34"
+    },
+    {
+      "offset": 83787,
+      "before": "2b",
+      "after": "4b"
+    },
+    {
+      "offset": 83788,
+      "before": "21",
+      "after": "1d"
+    },
+    {
+      "offset": 83789,
+      "before": "d0",
+      "after": "78"
+    },
+    {
+      "offset": 83790,
+      "before": "00",
+      "after": "03"
+    },
+    {
+      "offset": 83791,
+      "before": "2d",
+      "after": "7b"
+    },
+    {
+      "offset": 83792,
+      "before": "7f",
+      "after": "02"
+    },
+    {
+      "offset": 83793,
+      "before": "f4",
+      "after": "2b"
+    },
+    {
+      "offset": 83794,
+      "before": "87",
+      "after": "1e"
+    },
+    {
+      "offset": 83795,
+      "before": "ae",
+      "after": "d0"
+    },
+    {
+      "offset": 83796,
+      "before": "63",
+      "after": "00"
+    },
+    {
+      "offset": 83797,
+      "before": "7d",
+      "after": "2d"
+    },
+    {
+      "offset": 83798,
+      "before": "02",
+      "after": "cc"
+    },
+    {
+      "offset": 83799,
+      "before": "2b",
+      "after": "d0"
+    },
+    {
+      "offset": 83800,
+      "before": "1e",
+      "after": "83"
+    },
+    {
+      "offset": 83801,
+      "before": "d0",
+      "after": "e6"
+    },
+    {
+      "offset": 83802,
+      "before": "01",
+      "after": "63"
+    },
+    {
+      "offset": 83803,
+      "before": "2b",
+      "after": "7d"
+    },
+    {
+      "offset": 83804,
+      "before": "37",
+      "after": "01"
+    },
+    {
+      "offset": 83805,
+      "before": "d0",
+      "after": "2b"
+    },
+    {
+      "offset": 83806,
+      "before": "00",
+      "after": "36"
+    },
+    {
+      "offset": 83807,
+      "before": "2b",
+      "after": "d0"
+    },
+    {
+      "offset": 83809,
+      "before": "d1",
+      "after": "d8"
+    },
+    {
+      "offset": 83862,
+      "before": "da",
+      "after": "dd"
+    },
+    {
+      "offset": 84318,
+      "before": "08",
+      "after": "c6"
+    },
+    {
+      "offset": 84319,
+      "before": "69",
+      "after": "67"
+    },
+    {
+      "offset": 99308,
+      "before": "ba",
+      "after": "28"
+    },
+    {
+      "offset": 99309,
+      "before": "45",
+      "after": "e0"
+    },
+    {
+      "offset": 100128,
+      "before": "d4",
+      "after": "cb"
+    },
+    {
+      "offset": 100724,
+      "before": "ba",
+      "after": "f6"
+    },
+    {
+      "offset": 100725,
+      "before": "45",
+      "after": "e7"
+    },
+    {
+      "offset": 101182,
+      "before": "23",
+      "after": "45"
+    },
+    {
+      "offset": 101183,
+      "before": "39",
+      "after": "38"
+    },
+    {
+      "offset": 117114,
+      "before": "95",
+      "after": "71"
+    },
+    {
+      "offset": 117115,
+      "before": "c4",
+      "after": "c0"
+    },
+    {
+      "offset": 117138,
+      "before": "65",
+      "after": "8d"
+    }
+  ],
+  "device_access": false,
+  "written": true,
+  "output": "local/seqmute-02/keystep37_Firmware_Update_1_1_6_579_seqmute02.led"
+}

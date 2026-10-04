@@ -1,0 +1,55 @@
+PASS stock SEQ step emits Note On (control) [(144, 60, 2), (144, 64, 2)]
+PASS cand SEQ step emits nothing
+PASS cand SEQ leaves no active-note state
+PASS cand SEQ releases stale notes unconditionally step=0 retain_mode=0 n28=0 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=0 retain_mode=0 n28=1 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=0 retain_mode=1 n28=0 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=0 retain_mode=1 n28=1 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=1 retain_mode=0 n28=0 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=1 retain_mode=0 n28=1 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=1 retain_mode=1 n28=0 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=1 retain_mode=1 n28=1 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=2 retain_mode=0 n28=0 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=2 retain_mode=0 n28=1 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=2 retain_mode=1 n28=0 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=2 retain_mode=1 n28=1 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=3 retain_mode=0 n28=0 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=3 retain_mode=0 n28=1 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=3 retain_mode=1 n28=0 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS cand SEQ releases stale notes unconditionally step=3 retain_mode=1 n28=1 [(128, 62, 2), (128, 65, 2)]
+PASS    then no further messages (no duplicate Note Off)
+PASS ARP: stock == candidate (calls + full RAM) over 3000 random consumer/release/cleanup runs diffs=0
+PASS stock SEQ stopped: keyboard sends Note On/Off (reference) [[('out', 6569104, 1, 0), ('out', 6569104, 1, 1)], [('out', 6570128, 1, 0), ('out', 6570128, 1, 1)], [('out', 4209792, 1, 0)], [('out', 4210816, 1, 0), ('out', 4210816, 1, 1)]]
+PASS stock SEQ playing: keyboard does NOT send notes (transposes) (control) [[], [], [], []]
+PASS cand SEQ playing: keyboard MIDI Note On/Off identical to stopped reference [[('out', 6569104, 1, 0)], [('out', 6570128, 1, 0)], [('out', 4209792, 1, 0)], [('out', 4210816, 1, 0)]]
+PASS keyboard path unchanged vs stock: SEQ stopped
+PASS keyboard path unchanged vs stock: SEQ paused
+PASS keyboard path unchanged vs stock: SEQ playing + Kbd Play
+PASS keyboard path unchanged vs stock: SEQ step-record
+PASS keyboard path unchanged vs stock: SEQ rt-record playing
+PASS keyboard path unchanged vs stock: ARP stopped
+PASS keyboard path unchanged vs stock: ARP playing
+PASS keyboard path unchanged vs stock: ARP playing + flag11
+PASS keyboard path unchanged vs stock: ARP stopped chord
+PASS keyboard path unchanged vs stock: ARP playing chord
+PASS keyboard path unchanged vs stock: SEQ stopped chord
+PASS keyboard path unchanged vs stock: SEQ stopped u14
+PASS keyboard path unchanged vs stock: ARP playing u14
+PASS cand SEQ playing (chord mode): same note output as stopped reference [[('chord_out', 6569107, 1, 0)], [('chord_out', 6570131, 1, 0)], [], [('chord_out', 4210819, 1, 0)]]
+PASS cand SEQ playing (u14 mode): same note output as stopped reference [[('out', 6569107, 1, 0)], [('out', 6570131, 1, 0), ('out', 4209795, 1, 0)], [], [('out', 4210819, 1, 0)]]
+RESULT ALL PASS

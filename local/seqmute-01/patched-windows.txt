@@ -1,0 +1,78 @@
+--- stock 08013eb2
+08013eb2  a14b      ldr      r3, [pc, #0x284]   ; [08014138] = 0x20001124
+08013eb4  1b68      ldr      r3, [r3]
+08013eb6  db7b      ldrb     r3, [r3, #0xf]
+08013eb8  002b      cmp      r3, #0
+08013eba  40d0      beq      #0x8013f3e
+08013ebc  0022      movs     r2, #0
+08013ebe  0099      ldr      r1, [sp]
+08013ec0  2068      ldr      r0, [r4]
+08013ec2  fff711f9  bl       #0x80130e8
+08013ec6  7f30      adds     r0, #0x7f
+08013ec8  c0b2      uxtb     r0, r0
+08013eca  0128      cmp      r0, #1
+08013ecc  34d9      bls      #0x8013f38
+08013ece  9a4b      ldr      r3, [pc, #0x268]   ; [08014138] = 0x20001124
+08013ed0  1b68      ldr      r3, [r3]
+08013ed2  db7b      ldrb     r3, [r3, #0xf]
+08013ed4  002b      cmp      r3, #0
+08013ed6  3ed1      bne      #0x8013f56
+08013ed8  0323      movs     r3, #3
+08013eda  0193      str      r3, [sp, #4]
+08013edc  2068      ldr      r0, [r4]
+--- candidate 08013eb2
+08013eb2  a14b      ldr      r3, [pc, #0x284]   ; [08014138] = 0x20001124
+08013eb4  1b68      ldr      r3, [r3]
+08013eb6  db7b      ldrb     r3, [r3, #0xf]
+08013eb8  53b9      cbnz     r3, #0x8013ed0
+08013eba  40e0      b        #0x8013f3e
+08013ebc  0022      movs     r2, #0
+08013ebe  0099      ldr      r1, [sp]
+08013ec0  2068      ldr      r0, [r4]
+08013ec2  fff711f9  bl       #0x80130e8
+08013ec6  7f30      adds     r0, #0x7f
+08013ec8  c0b2      uxtb     r0, r0
+08013eca  0128      cmp      r0, #1
+08013ecc  34d9      bls      #0x8013f38
+08013ece  03e0      b        #0x8013ed8
+08013ed0  2046      mov      r0, r4
+08013ed2  00f0c1f9  bl       #0x8014258
+08013ed6  2fe0      b        #0x8013f38
+08013ed8  0323      movs     r3, #3
+08013eda  0193      str      r3, [sp, #4]
+08013edc  2068      ldr      r0, [r4]
+--- stock 0801b8d2
+0801b8d2  002b      cmp      r3, #0
+0801b8d4  67d1      bne      #0x801b9a6
+0801b8d6  ba45      cmp      sl, r7
+0801b8d8  00f06784  beq.w    #0x801c1aa
+--- candidate 0801b8d2
+0801b8d2  002b      cmp      r3, #0
+0801b8d4  67d1      bne      #0x801b9a6
+0801b8d6  28e0      b        #0x801b92a
+0801b8d8  00f06784  beq.w    #0x801c1aa
+--- stock 0801be3a
+0801be3a  002b      cmp      r3, #0
+0801be3c  40f0a780  bne.w    #0x801bf8e
+0801be40  ba45      cmp      sl, r7
+0801be42  00f0b281  beq.w    #0x801c1aa
+0801be46  b7f1ff3f  cmp.w    r7, #-1
+--- candidate 0801be3a
+0801be3a  002b      cmp      r3, #0
+0801be3c  40f0a780  bne.w    #0x801bf8e
+0801be40  f6e7      b        #0x801be30
+0801be42  00f0b281  beq.w    #0x801c1aa
+0801be46  b7f1ff3f  cmp.w    r7, #-1
+differing application bytes: 19 ['0x8013eb8', '0x8013eb9', '0x8013ebb', '0x8013ece', '0x8013ecf', '0x8013ed0', '0x8013ed1', '0x8013ed2', '0x8013ed3', '0x8013ed4', '0x8013ed5', '0x8013ed6', '0x8013ed7', '0x801b8d6', '0x801b8d7', '0x801be40', '0x801be41', '0x802fffe', '0x802ffff']
+IDENTICAL vectors 0x08004000..0x080041ff 542006fe1a2a2ef4
+IDENTICAL scheduler 0x080129cc..0x08013007 193e3e699aaab911
+IDENTICAL tick/clock helper 0x080120ec..0x0801225b 2a003af86672c5f1
+IDENTICAL transport actions 0x08012334..0x080128a0 9bc033b4ec9a16fb
+IDENTICAL MIDI clock emit 0x08014350..0x08014410 b605c8b0db141994
+IDENTICAL release_sequence_step+cleanup 0x0801415c..0x080142d3 6cf44133e340cb25
+IDENTICAL ARP builder 0x080116e0..0x08011e0b e4dfab33a39136ff
+IDENTICAL switch handler+poll 0x08016968..0x08016abf / 0x08018fb0..0x08019137 61f71d01c85c825a
+IDENTICAL button router 0x08017260..0x08017ed0 444f2d1243de839a
+IDENTICAL MIDI in/out 0x0800fa64..0x08011000 0f3c50bc15e50df0
+IDENTICAL note output stage 0x0801ad20..0x0801b74f 94593ce531f3bc75
+IDENTICAL IRQ handlers 0x08018300..0x08018a80 f1cd9dfaa5a15b24
