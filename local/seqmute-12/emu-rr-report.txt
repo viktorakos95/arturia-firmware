@@ -1,0 +1,136 @@
+PASS round robin off: keyboard path identical to seqmute-03 (36 states x 6 events)
+PASS track 1, first key: osc 1 pitch (MSB 60, LSB 0), level 127, osc 2 muted, gate note on [(179, 16, 60), (179, 48, 0), (179, 69, 127), (179, 78, 0), (147, 60, 100)]
+PASS second key higher: gate retrigger, osc 1 keeps 60, osc 2 gets 67 [(131, 60, 64), (179, 16, 60), (179, 48, 0), (179, 17, 67), (179, 49, 0), (179, 69, 127), (179, 78, 127), (147, 67, 90)]
+PASS third key lower than both: takes the newest voice, lower note ends up on osc 1, higher on osc 2 [(131, 67, 64), (179, 16, 55), (179, 48, 0), (179, 17, 60), (179, 49, 0), (179, 69, 127), (179, 78, 127), (147, 55, 80)]
+PASS releasing the key that lost its oscillator (67) does nothing
+PASS releasing 60 (osc 2) while 55 (osc 1) is held: osc 2 muted, gate stays [(179, 78, 0)]
+PASS last key up closes the gate note (the newest key's) [(131, 55, 64)]
+PASS second key lower than the first: both oscillators get level 127 (the resident key moved to osc 2, which was muted) [(131, 64, 64), (179, 16, 60), (179, 48, 0), (179, 17, 64), (179, 49, 0), (179, 69, 127), (179, 78, 127), (147, 60, 100)]
+PASS Hold on: releasing keys sends nothing (every key keeps sounding, no oscillator muted) ([], [])
+PASS Hold released: the track ends with one Note Off [(131, 67, 64)]
+PASS Hold on, both voices taken (one sustained by Hold): a new key takes the sustained voice and retriggers [(131, 67, 64), (179, 16, 67), (179, 48, 0), (179, 17, 72), (179, 49, 0), (179, 69, 127), (179, 78, 127), (147, 72, 90)]
+PASS Hold released while a key is still down: freed oscillator muted, gate stays
+PASS four tracks, a chord and its release: messages == model, channels = keyboard channel + track True
+PASS three keys with four tracks: key 1+2 in track 1 (channel 4), key 3 alone in track 2 (channel 5, other osc muted) [(179, 16, 60), (179, 48, 0), (179, 69, 127), (179, 78, 0), (147, 60, 100), (131, 60, 64), (179, 16, 60), (179, 48, 0), (179, 17, 62), (179, 49, 0), (179, 69, 127), (179, 78, 127), (147, 62, 100), (180, 16, 64), (180, 48, 0), (180, 69, 127), (180, 78, 0), (148, 64, 100)]
+PASS pitch maths and clamp: scale byte 0, offset byte 0, fine byte 0
+PASS pitch maths and clamp: scale byte 0, offset byte 0, fine byte 1
+PASS pitch maths and clamp: scale byte 0, offset byte 0, fine byte 128
+PASS pitch maths and clamp: scale byte 0, offset byte 0, fine byte 255
+PASS pitch maths and clamp: scale byte 0, offset byte 1, fine byte 0
+PASS pitch maths and clamp: scale byte 0, offset byte 1, fine byte 1
+PASS pitch maths and clamp: scale byte 0, offset byte 1, fine byte 128
+PASS pitch maths and clamp: scale byte 0, offset byte 1, fine byte 255
+PASS pitch maths and clamp: scale byte 0, offset byte 128, fine byte 0
+PASS pitch maths and clamp: scale byte 0, offset byte 128, fine byte 1
+PASS pitch maths and clamp: scale byte 0, offset byte 128, fine byte 128
+PASS pitch maths and clamp: scale byte 0, offset byte 128, fine byte 255
+PASS pitch maths and clamp: scale byte 0, offset byte 255, fine byte 0
+PASS pitch maths and clamp: scale byte 0, offset byte 255, fine byte 1
+PASS pitch maths and clamp: scale byte 0, offset byte 255, fine byte 128
+PASS pitch maths and clamp: scale byte 0, offset byte 255, fine byte 255
+PASS pitch maths and clamp: scale byte 1, offset byte 0, fine byte 0
+PASS pitch maths and clamp: scale byte 1, offset byte 0, fine byte 1
+PASS pitch maths and clamp: scale byte 1, offset byte 0, fine byte 128
+PASS pitch maths and clamp: scale byte 1, offset byte 0, fine byte 255
+PASS pitch maths and clamp: scale byte 1, offset byte 1, fine byte 0
+PASS pitch maths and clamp: scale byte 1, offset byte 1, fine byte 1
+PASS pitch maths and clamp: scale byte 1, offset byte 1, fine byte 128
+PASS pitch maths and clamp: scale byte 1, offset byte 1, fine byte 255
+PASS pitch maths and clamp: scale byte 1, offset byte 128, fine byte 0
+PASS pitch maths and clamp: scale byte 1, offset byte 128, fine byte 1
+PASS pitch maths and clamp: scale byte 1, offset byte 128, fine byte 128
+PASS pitch maths and clamp: scale byte 1, offset byte 128, fine byte 255
+PASS pitch maths and clamp: scale byte 1, offset byte 255, fine byte 0
+PASS pitch maths and clamp: scale byte 1, offset byte 255, fine byte 1
+PASS pitch maths and clamp: scale byte 1, offset byte 255, fine byte 128
+PASS pitch maths and clamp: scale byte 1, offset byte 255, fine byte 255
+PASS pitch maths and clamp: scale byte 28, offset byte 0, fine byte 0
+PASS pitch maths and clamp: scale byte 28, offset byte 0, fine byte 1
+PASS pitch maths and clamp: scale byte 28, offset byte 0, fine byte 128
+PASS pitch maths and clamp: scale byte 28, offset byte 0, fine byte 255
+PASS pitch maths and clamp: scale byte 28, offset byte 1, fine byte 0
+PASS pitch maths and clamp: scale byte 28, offset byte 1, fine byte 1
+PASS pitch maths and clamp: scale byte 28, offset byte 1, fine byte 128
+PASS pitch maths and clamp: scale byte 28, offset byte 1, fine byte 255
+PASS pitch maths and clamp: scale byte 28, offset byte 128, fine byte 0
+PASS pitch maths and clamp: scale byte 28, offset byte 128, fine byte 1
+PASS pitch maths and clamp: scale byte 28, offset byte 128, fine byte 128
+PASS pitch maths and clamp: scale byte 28, offset byte 128, fine byte 255
+PASS pitch maths and clamp: scale byte 28, offset byte 255, fine byte 0
+PASS pitch maths and clamp: scale byte 28, offset byte 255, fine byte 1
+PASS pitch maths and clamp: scale byte 28, offset byte 255, fine byte 128
+PASS pitch maths and clamp: scale byte 28, offset byte 255, fine byte 255
+PASS pitch maths and clamp: scale byte 255, offset byte 0, fine byte 0
+PASS pitch maths and clamp: scale byte 255, offset byte 0, fine byte 1
+PASS pitch maths and clamp: scale byte 255, offset byte 0, fine byte 128
+PASS pitch maths and clamp: scale byte 255, offset byte 0, fine byte 255
+PASS pitch maths and clamp: scale byte 255, offset byte 1, fine byte 0
+PASS pitch maths and clamp: scale byte 255, offset byte 1, fine byte 1
+PASS pitch maths and clamp: scale byte 255, offset byte 1, fine byte 128
+PASS pitch maths and clamp: scale byte 255, offset byte 1, fine byte 255
+PASS pitch maths and clamp: scale byte 255, offset byte 128, fine byte 0
+PASS pitch maths and clamp: scale byte 255, offset byte 128, fine byte 1
+PASS pitch maths and clamp: scale byte 255, offset byte 128, fine byte 128
+PASS pitch maths and clamp: scale byte 255, offset byte 128, fine byte 255
+PASS pitch maths and clamp: scale byte 255, offset byte 255, fine byte 0
+PASS pitch maths and clamp: scale byte 255, offset byte 255, fine byte 1
+PASS pitch maths and clamp: scale byte 255, offset byte 255, fine byte 128
+PASS pitch maths and clamp: scale byte 255, offset byte 255, fine byte 255
+PASS 600 random sessions with 1-4 tracks (20507 key events) == reference model, message for message
+PASS MIDI-in notes bypass round robin [('OUT', 6572179)]
+PASS Shift+Hold off with 1 track(s): open gates closed, tune 0 and level 127 on every voice in use, state cleared, shows OFF ([(131, 40, 64), (179, 16, 64), (179, 48, 0), (179, 69, 127), (179, 17, 64), (179, 49, 0), (179, 78, 127)], [(131, 40, 64), (179, 16, 64), (179, 48, 0), (179, 69, 127), (179, 17, 64), (179, 49, 0), (179, 78, 127)])
+PASS Shift+Hold off with 2 track(s): open gates closed, tune 0 and level 127 on every voice in use, state cleared, shows OFF ([(131, 70, 64), (132, 40, 64), (179, 16, 64), (179, 48, 0), (179, 69, 127), (179, 17, 64), (179, 49, 0), (179, 78, 127), (180, 16, 64), (180, 48, 0), (180, 69, 127), (180, 17, 64), (180, 49, 0), (180, 78, 127)], [(131, 70, 64), (132, 40, 64), (179, 16, 64), (179, 48, 0), (179, 69, 127), (179, 17, 64), (179, 49, 0), (179, 78, 127), (180, 16, 64), (180, 48, 0), (180, 69, 127), (180, 17, 64), (180, 49, 0), (180, 78, 127)])
+PASS Shift+Hold off with 4 track(s): open gates closed, tune 0 and level 127 on every voice in use, state cleared, shows OFF ([(131, 70, 64), (132, 40, 64), (179, 16, 64), (179, 48, 0), (179, 69, 127), (179, 17, 64), (179, 49, 0), (179, 78, 127), (180, 16, 64), (180, 48, 0), (180, 69, 127), (180, 17, 64), (180, 49, 0), (180, 78, 127), (181, 16, 64), (181, 48, 0), (181, 69, 127), (181, 17, 64), (181, 49, 0), (181, 78, 127), (182, 16, 64), (182, 48, 0), (182, 69, 127), (182, 17, 64), (182, 49, 0), (182, 78, 127)], [(131, 70, 64), (132, 40, 64), (179, 16, 64), (179, 48, 0), (179, 69, 127), (179, 17, 64), (179, 49, 0), (179, 78, 127), (180, 16, 64), (180, 48, 0), (180, 69, 127), (180, 17, 64), (180, 49, 0), (180, 78, 127), (181, 16, 64), (181, 48, 0), (181, 69, 127), (181, 17, 64), (181, 49, 0), (181, 78, 127), (182, 16, 64), (182, 48, 0), (182, 69, 127), (182, 17, 64), (182, 49, 0), (182, 78, 127)])
+PASS knob 1 raw 0: scale byte 1, shows 100 (1, [('show', 536875392, 134239975, 0, 0)])
+PASS knob 2 raw 0: offset byte 1, shows -12 semitones (1, [('show', 536875392, 134239993, 0, 116)])
+PASS knob 3 raw 0: fine byte 1, shows -99 units (1, [('show', 536875392, 134239993, 0, 29)])
+PASS knob 1 raw 1: scale byte 1, shows 100 (1, [('show', 536875392, 134239975, 0, 0)])
+PASS knob 2 raw 1: offset byte 1, shows -12 semitones (1, [('show', 536875392, 134239993, 0, 116)])
+PASS knob 3 raw 1: fine byte 1, shows -99 units (1, [('show', 536875392, 134239993, 0, 29)])
+PASS knob 1 raw 2: scale byte 2, shows 101 (2, [('show', 536875392, 134239975, 0, 1)])
+PASS knob 2 raw 2: offset byte 2, shows -12 semitones (2, [('show', 536875392, 134239993, 0, 116)])
+PASS knob 3 raw 2: fine byte 2, shows -98 units (2, [('show', 536875392, 134239993, 0, 30)])
+PASS knob 1 raw 100: scale byte 100, shows 199 (100, [('show', 536875392, 134239975, 0, 99)])
+PASS knob 2 raw 100: offset byte 100, shows -3 semitones (100, [('show', 536875392, 134239993, 0, 125)])
+PASS knob 3 raw 100: fine byte 100, shows -22 units (100, [('show', 536875392, 134239993, 0, 106)])
+PASS knob 1 raw 127: scale byte 127, shows 226 (127, [('show', 536875392, 134239975, 0, 126)])
+PASS knob 2 raw 127: offset byte 127, shows +0 semitones (127, [('show', 536875392, 134239993, 0, 128)])
+PASS knob 3 raw 127: fine byte 127, shows -1 units (127, [('show', 536875392, 134239993, 0, 127)])
+PASS knob 1 raw 128: scale byte 128, shows 227 (128, [('show', 536875392, 134239975, 0, 127)])
+PASS knob 2 raw 128: offset byte 128, shows +0 semitones (128, [('show', 536875392, 134239993, 0, 128)])
+PASS knob 3 raw 128: fine byte 128, shows +0 units (128, [('show', 536875392, 134239993, 0, 128)])
+PASS knob 1 raw 129: scale byte 129, shows 228 (129, [('show', 536875392, 134239975, 0, 128)])
+PASS knob 2 raw 129: offset byte 129, shows +0 semitones (129, [('show', 536875392, 134239993, 0, 128)])
+PASS knob 3 raw 129: fine byte 129, shows +1 units (129, [('show', 536875392, 134239993, 0, 129)])
+PASS knob 1 raw 200: scale byte 200, shows 299 (200, [('show', 536875392, 134239975, 0, 199)])
+PASS knob 2 raw 200: offset byte 200, shows +7 semitones (200, [('show', 536875392, 134239993, 0, 135)])
+PASS knob 3 raw 200: fine byte 200, shows +56 units (200, [('show', 536875392, 134239993, 0, 184)])
+PASS knob 1 raw 254: scale byte 254, shows 353 (254, [('show', 536875392, 134239975, 0, 253)])
+PASS knob 2 raw 254: offset byte 254, shows +12 semitones (254, [('show', 536875392, 134239993, 0, 140)])
+PASS knob 3 raw 254: fine byte 254, shows +98 units (254, [('show', 536875392, 134239993, 0, 226)])
+PASS knob 1 raw 255: scale byte 255, shows 354 (255, [('show', 536875392, 134239975, 0, 254)])
+PASS knob 2 raw 255: offset byte 255, shows +12 semitones (255, [('show', 536875392, 134239993, 0, 140)])
+PASS knob 3 raw 255: fine byte 255, shows +99 units (255, [('show', 536875392, 134239993, 0, 227)])
+PASS knob 4 raw 0: 1 track(s), on bit kept, name index 2 ('0x83', [('show', 536875392, 134345349, 0, 2)])
+PASS knob 4 raw 63: 1 track(s), on bit kept, name index 2 ('0x83', [('show', 536875392, 134345349, 0, 2)])
+PASS knob 4 raw 64: 2 track(s), on bit kept, name index 3 ('0x82', [('show', 536875392, 134345349, 0, 3)])
+PASS knob 4 raw 127: 2 track(s), on bit kept, name index 3 ('0x82', [('show', 536875392, 134345349, 0, 3)])
+PASS knob 4 raw 128: 3 track(s), on bit kept, name index 4 ('0x81', [('show', 536875392, 134345349, 0, 4)])
+PASS knob 4 raw 191: 3 track(s), on bit kept, name index 4 ('0x81', [('show', 536875392, 134345349, 0, 4)])
+PASS knob 4 raw 192: 4 track(s), on bit kept, name index 5 ('0x80', [('show', 536875392, 134345349, 0, 5)])
+PASS knob 4 raw 255: 4 track(s), on bit kept, name index 5 ('0x80', [('show', 536875392, 134345349, 0, 5)])
+PASS scale display (value + 100)
+PASS signed display (value - 128)
+PASS names OFF, ON, 1, 2, 3, 4
+PASS CC-page knob, round robin off, Shift 0: identical to stock (calls and object state) (([('send', 49374, 5065397, 0, 0), ('show', 536875392, 134335161, 0, 77)], b'\xde\xc0\x00\x00\x01\xfe\x01\x08\x00\x00\x00\x00\x00\x00M\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'), ([('send', 49374, 5065397, 0, 0), ('show', 536875392, 134335161, 0, 77)], b'\xde\xc0\x00\x00\x01\xfe\x01\x08\x00\x00\x00\x00\x00\x00M\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'))
+PASS CC-page knob, round robin off, Shift 1: identical to stock (calls and object state) (([('send', 49374, 5065397, 0, 0), ('show', 536875392, 134335161, 0, 77)], b'\xde\xc0\x00\x00\x01\xfe\x01\x08\x00\x00\x00\x00\x00\x00M\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'), ([('send', 49374, 5065397, 0, 0), ('show', 536875392, 134335161, 0, 77)], b'\xde\xc0\x00\x00\x01\xfe\x01\x08\x00\x00\x00\x00\x00\x00M\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'))
+PASS CC-page knob, round robin on, Shift 0: identical to stock (calls and object state) (([('send', 49374, 5065397, 0, 0), ('show', 536875392, 134335161, 0, 77)], b'\xde\xc0\x00\x00\x01\xfe\x01\x08\x00\x00\x00\x00\x00\x00M\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'), ([('send', 49374, 5065397, 0, 0), ('show', 536875392, 134335161, 0, 77)], b'\xde\xc0\x00\x00\x01\xfe\x01\x08\x00\x00\x00\x00\x00\x00M\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'))
+PASS CC-page knob, round robin off, Shift 1: identical to stock (calls and object state) (([('send', 49374, 5065397, 0, 0), ('show', 536875392, 134335161, 0, 77)], b'\xde\xc0\x00\x00\x01\xfe\x01\x08\x00\x00\x00\x00\x00\x00M\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'), ([('send', 49374, 5065397, 0, 0), ('show', 536875392, 134335161, 0, 77)], b'\xde\xc0\x00\x00\x01\xfe\x01\x08\x00\x00\x00\x00\x00\x00M\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'))
+PASS Shift + CC knob with 1 track(s): CC 74 value 77 on channels 4..4 (keyboard channel + track), display/state as stock [(49374, 5065395)]
+PASS Shift + CC knob with 2 track(s): CC 74 value 77 on channels 4..5 (keyboard channel + track), display/state as stock [(49374, 5065395), (49374, 5065396)]
+PASS Shift + CC knob with 3 track(s): CC 74 value 77 on channels 4..6 (keyboard channel + track), display/state as stock [(49374, 5065395), (49374, 5065396), (49374, 5065397)]
+PASS Shift + CC knob with 4 track(s): CC 74 value 77 on channels 4..7 (keyboard channel + track), display/state as stock [(49374, 5065395), (49374, 5065396), (49374, 5065397), (49374, 5065398)]
+PASS unchanged value sends nothing (stock early exit kept)
+PASS stock literal pool words used by the CC-page code (0x0800531c..0x08005333) are unchanged
+PASS no code outside the replaced area reads a word inside it (check_pools.py)
+RESULT ALL PASS
